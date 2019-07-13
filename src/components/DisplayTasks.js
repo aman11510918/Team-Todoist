@@ -14,6 +14,19 @@ export default class DisplayTasks extends Component {
     componentDidMount(){
         this.getData(); 
     }
+
+    handleDelete = async (id) => {
+
+        let array  = [...this.state.items];
+        await fetch(`https://api.todoist.com/rest/v1/tasks/${id}`,{
+            method : 'DELETE',
+            headers:{
+                'Authorization': "Bearer "+ token,
+            },
+        });
+        let newDeleted = array.filter(data => data.id !== id);
+        this.setState({items: newDeleted})
+    }
     getData = async () => {
         try {
             const res = await fetch(`https://api.todoist.com/rest/v1/tasks`, {
@@ -25,7 +38,7 @@ export default class DisplayTasks extends Component {
             },
             
             });
-            const result = await res.json();
+            let result = await res.json();
             this.setState({
             isLoaded: true,
             items: result,
@@ -50,8 +63,11 @@ export default class DisplayTasks extends Component {
         else {
             return (
             <div>
-            { items.map(data => (
-            <p key={data.id}>{data.content}</p> 
+            { items.map((data) => (
+            <p key={data.id}>{data.content}
+            <button onClick = {() => this.handleDelete(data.id)}>DEL</button>
+            </p> 
+            
             ))}
             </div>
             );
