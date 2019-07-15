@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { Button } from 'antd';
 
-const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
+const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 
 export default class DisplayTasks extends Component {
   constructor(props) {
@@ -133,7 +132,7 @@ export default class DisplayTasks extends Component {
             <li key={data.id} style={{ listStyle: 'none' }}>
               <input type="checkbox" onChange={() => this.handleCheckboxChange(data)} defaultChecked={data.completed} />
               {data.content}
-              <button onClick={() => this.handleDelete(data.id)} className = "deleteBtn">DEL</button>
+              <button onClick={() => this.handleDelete(data.id)}>DEL</button>
             </li>
           ))}
         </div>
