@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import '../App.css';
 
-const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
+const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 
 export default class DisplayTasks extends Component {
   constructor(props) {

@@ -4,11 +4,9 @@ import 'antd/dist/antd.css';
 import '../App.css';
 import { Layout, Menu, Icon } from 'antd';
 import logo from '../logo/Todolist-home.jpg';
-import { Input }from 'antd';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
-const { Search } = Input;
 
 export default class HomePage extends Component {
     render() { 
@@ -18,19 +16,18 @@ export default class HomePage extends Component {
     <Header className="header" style = {{background : '#db4c3f', height : '44px'}}> 
       <img src={logo} alt="Todoist Logo" className="logo"/>
 
-      <Search
-      className = 'searchbar'
-      placeholder="Quick Find"
-      onSearch={value => console.log(value)}
-    />
+      <form>
+        <input className = "searchbox" type="text" name="search" placeholder="Quick Find" />
+      </form>
+
       <Menu
         mode="horizontal"
        
         style={{ lineHeight: '45px', background : '#db4c3f', float: 'right'}}>
 
-        <Menu.Item key="1">nav 1</Menu.Item>
-        <Menu.Item key="2">nav 2</Menu.Item>
-        <Menu.Item key="3">nav 3</Menu.Item>
+        <Menu.Item key="1" ><Icon type="plus" /></Menu.Item>
+        <Menu.Item key="2" ><Icon type="notification" theme="filled"/></Menu.Item>
+        <Menu.Item key="3" ><Icon type="setting" theme="filled" /></Menu.Item>
       </Menu>
     </Header>
     <Layout>
@@ -43,12 +40,24 @@ export default class HomePage extends Component {
             defaultOpenKeys={['sub1']}
             style={{ height: '100%' }}
           >
+            <Menu.Item key="1">
+            <Icon type="inbox" />
+            Inbox
+          </Menu.Item>
+          <Menu.Item key="2">
+            <Icon type="calendar" />
+            Today
+          </Menu.Item>
+          <Menu.Item key="3">
+            <Icon type="calendar" />
+            Next 7 Days
+          </Menu.Item>
             <SubMenu
               key="sub1"
               title={
                 <span>
-                  <Icon type="inbox" />
-                  Inbox
+                  <Icon type="plus" />
+                  Project
                 </span>
               }
             >
@@ -57,8 +66,8 @@ export default class HomePage extends Component {
               key="sub2"
               title={
                 <span>
-                  <Icon type="calendar" />
-                  Today
+                 <Icon type="plus" />
+                    Label
                 </span>
               }
             >
@@ -67,8 +76,8 @@ export default class HomePage extends Component {
               key="sub3"
               title={
                 <span>
-                  <Icon type="calendar" />
-                  subnav 3
+                  <Icon type="plus" />
+                    Filter
                 </span>
               }
             >
