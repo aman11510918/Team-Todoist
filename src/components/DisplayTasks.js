@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import '../App.css';
+import { Button } from 'antd';
 
 const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 
@@ -66,7 +68,7 @@ export default class DisplayTasks extends Component {
                 <h2>Today</h2>
             { items.map((data) => (
             <p key={data.id}>{data.content}
-            <button onClick = {() => this.handleDelete(data.id)}>DEL</button>
+            <Button onClick = {() => this.handleDelete(data.id)} className = "deleteBtn">DEL</Button>
             </p> 
             ))}
             </div>
