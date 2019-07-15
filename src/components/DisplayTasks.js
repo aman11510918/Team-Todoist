@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
+const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
 
 export default class DisplayTasks extends Component {
     constructor(props){
@@ -9,6 +9,7 @@ export default class DisplayTasks extends Component {
             error: undefined,
             isLoaded: false,
             items: [],
+            content: ''
         };
     }
     componentDidMount(){
@@ -52,6 +53,47 @@ export default class DisplayTasks extends Component {
         }
     }
 
+    onAddChange = (event) => {
+        this.setState({ content: event.target.value });
+    }
+    
+    handleAdd = async (event) => {
+
+        event.preventDefault();
+
+        let task = {
+            content: this.state.content
+        }
+
+        const request = await fetch('https://api.todoist.com/rest/v1/tasks', {
+            method: "POST",
+            body: JSON.stringify(task),
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const response = await request.json();
+    
+        const items = this.state.items.slice();
+        items.push(response);
+    
+        this.state.content && this.setState({
+          content: '',
+          items: items,
+        }, () => console.log('after adding new task, all tasks are:', this.state.items ));
+    }
+    
+
+    addTaskUI = () => {
+        return (
+            <form className="TaskList" onSubmit={this.handleAdd}>
+                <input className="addTaskInputBox" value={this.state.content} onChange={this.onAddChange} />
+                <button className="addTaskButton" >Add task</button>
+            </form>
+        );
+    }
+
     render(){
         const { error, isLoaded, items } = this.state;
         if (error) {    
@@ -63,6 +105,7 @@ export default class DisplayTasks extends Component {
         else {
             return (
             <div>
+                {this.addTaskUI()}
             { items.map((data) => (
             <p key={data.id}>{data.content}
             <button onClick = {() => this.handleDelete(data.id)}>DEL</button>
