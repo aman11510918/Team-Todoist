@@ -63,11 +63,11 @@ export default class DisplayTasks extends Component {
         else {
             return (
             <div>
+                <h2>Today</h2>
             { items.map((data) => (
             <p key={data.id}>{data.content}
             <button onClick = {() => this.handleDelete(data.id)}>DEL</button>
             </p> 
-            
             ))}
             </div>
             );
