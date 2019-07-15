@@ -133,11 +133,9 @@ export default class DisplayTasks extends Component {
               {data.content}
               <button onClick={() => this.handleDelete(data.id)}>DEL</button>
             </li>
-
           ))}
         </div>
       );
     }
   }
 }
-

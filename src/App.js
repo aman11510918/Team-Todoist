@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import DisplayTasks from './components/DisplayTasks';
+
+import HomePage from './components/HomePage';
 
 export default class App extends Component {
   render(){
     return (
       <div>
-        <DisplayTasks />
+        <HomePage />
       </div>
     )
   }
