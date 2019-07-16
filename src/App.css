@@ -13,7 +13,7 @@
   position:fixed;
   margin: 8px 0px 0px -50px;
 }
-input[type=text] {
+.searchbox {
   width: 130px;
   height : 10px;
   box-sizing: border-box;
@@ -29,6 +29,6 @@ input[type=text] {
   transition: width 0.4s ease-in-out;
 }
 
-input[type=text]:focus {
+.searchbox:focus {
   width: 40%;
 }
