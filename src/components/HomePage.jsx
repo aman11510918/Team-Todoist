@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import DisplayTasks from './DisplayTasks';
 import 'antd/dist/antd.css';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon,Collapse, Button } from 'antd';
 import '../App.css';
 import logo from '../logo/Todolist-home.jpg';
 
+const { Panel } = Collapse;
+
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
+
+const genExtra = () => (
+  <Icon
+    type="plus"
+    onClick={event => {
+      // If you don't want click extra trigger collapse, you can prevent this:
+      event.stopPropagation();
+    }}
+  />
+);
+
 
 export default class HomePage extends Component {
     render() { 
@@ -52,36 +65,40 @@ export default class HomePage extends Component {
             <Icon type="calendar" />
             Next 7 Days
           </Menu.Item>
-            <SubMenu
-              key="sub1"
-              title={
-                <span>
-                  <Icon type="plus" />
-                  Project
-                </span>
-              }
-            >
-            </SubMenu>
-            <SubMenu
-              key="sub2"
-              title={
-                <span>
-                 <Icon type="plus" />
-                    Label
-                </span>
-              }
-            >
-            </SubMenu>
-            <SubMenu
-              key="sub3"
-              title={
-                <span>
-                  <Icon type="plus" />
-                    Filter
-                </span>
-              }
-            >
-            </SubMenu>
+
+          <Menu.Item key="4">
+          <Collapse
+                    expandIconPosition={'left'}
+                  >
+                    <Panel header="Project" extra={genExtra()}>
+                      <div><Button type="link"><Icon type="plus" />Add Project</Button></div>
+                    </Panel>
+                    
+                    
+                  </Collapse>
+
+          </Menu.Item>
+
+          <Menu.Item key="5">
+          <Collapse
+                    expandIconPosition={'left'}
+                  >
+                <Panel header="Label" extra={genExtra()}>
+                      <div><Button type="link"><Icon type="plus" />Add Label</Button></div>
+                    </Panel>
+                </Collapse>
+
+          </Menu.Item>
+          <Menu.Item key="6">
+          <Collapse
+                    expandIconPosition={'left'}
+                  >
+                <Panel header="Filter" extra={genExtra()}>
+                      <div>Filter according to priority.</div>
+                    </Panel>
+                </Collapse>
+
+          </Menu.Item>
           </Menu>
         </Sider>
         <Content style={{ padding: '0 24px', minHeight: 280 }}>

@@ -2,13 +2,41 @@ import React, { Component } from 'react';
 import 'pretty-checkbox'
 import '../App.css';
 import { Menu, Icon } from 'antd';
-import { Modal, Button, Popover} from 'antd';
+import { Button, Modal, Form, Input, Popover} from 'antd';
 
 const { confirm } = Modal;
 
 const { SubMenu } = Menu;
 
 const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
+
+/*---------------for edit form----------------*/
+
+const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
+  // eslint-disable-next-line
+  class extends React.Component {
+    render() {
+      const { visible, onCancel, onCreate, form } = this.props;
+      const { getFieldDecorator } = form;
+      return (
+        <Modal
+          visible={visible}
+          title="Create a new collection"
+          okText="Edit"
+          onCancel={onCancel}
+          onOk={onCreate}
+        >
+          <Form layout="vertical">
+            <Form.Item label="Write Your Changes Here">
+              {getFieldDecorator('description')(<Input type="textarea" />)}
+            </Form.Item>
+          </Form>
+        </Modal>
+      );
+    }
+  },
+);
+/*------------------------------------------- */
 
 export default class DisplayTasks extends Component {
   constructor(props) {
@@ -18,7 +46,10 @@ export default class DisplayTasks extends Component {
       isLoaded: false,
       items: [],
       content: '',
-      completed: false
+      completed: false,
+      editContent: '',
+      visible: false,
+      editableTaskID: NaN
     };
   }
   componentDidMount() {
@@ -38,14 +69,7 @@ export default class DisplayTasks extends Component {
     let newDeleted = array.filter(data => data.id !== id);
     this.setState({ items: newDeleted })
   }
-
-  content = (
-    <div>
-      <p>Content</p>
-      <p>Content</p>
-    </div>
-  );
-  
+ 
 
   showDeleteConfirm = (data) => {
     confirm({
@@ -138,7 +162,6 @@ export default class DisplayTasks extends Component {
 
   }
 
-
   addTaskUI = () => {
     return (
       <form className="TaskList" onSubmit={this.handleAdd}>
@@ -151,8 +174,79 @@ export default class DisplayTasks extends Component {
     );
   }
 
+  /*---------------------edit---------------*/
+  
+  showModal = () => {
+    this.setState({ visible: true });
+  };
+
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
+
+  handleCreate = () => {
+    const { form } = this.formRef.props;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+
+      console.log('Received values of form: ', values);
+      form.resetFields();
+      this.setState({ visible: false });
+    });
+  };
+
+  saveFormRef = formRef => {
+    this.formRef = formRef;
+  };
+
+
+
+  onEditClick = (task) => {
+    this.setState({editContent: task.content, editableTaskID: task.id}, () => console.log('set in state:', this.state.editContent));
+  }
+
+  onEditSubmit = (data) => {
+    console.log('edited content:', this.state.editContent);
+    const taskID = this.state.editableTaskID;
+    let allItems = this.state.items.slice();
+    allItems.filter(task => task.id === taskID)[0].content = this.state.editContent;
+    this.setState({item: allItems});
+
+    const currentItem = this.state.items.filter(task => task.id === taskID)[0];
+    console.log(currentItem);
+
+    fetch(`https://api.todoist.com/rest/v1/tasks/${currentItem.id}`, {
+      method: 'POST',
+      body: JSON.stringify({ content: currentItem.content }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+  }
+
+  onEditChange = (event) => {
+    console.log('changed content:', event.target.value);
+    this.setState({ editContent: event.target.value});
+  }
+
+  editTaskUI = () => {
+    return(
+      <form onSubmit={(event) => { event.preventDefault(); this.onEditSubmit(this.state.items); this.setState({editContent: ''}) }}>
+        <label>
+          Edit Content:
+          <input type="text" value={this.state.editContent} onChange={this.onEditChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+  /*---------------------------------------------------*/
+
   render() {
-    console.log('inside render');
+    // console.log('inside render');
     const { error, isLoaded, items } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -163,7 +257,7 @@ export default class DisplayTasks extends Component {
     else {
       return (
         <div>
-        
+          {this.editTaskUI()}
           {items.map((data) => (
             <li className = "listOfTask" key={data.id} style={{ listStyle: 'none' }}>
                 <div>
@@ -187,7 +281,7 @@ export default class DisplayTasks extends Component {
                         Delete Task
                         </Button>
                     </Menu.Item>
-                    <Menu.Item key="setting:2">Option 2</Menu.Item>
+                    <Menu.Item key="setting:2"><Button type = 'link' onClick={() => this.onEditClick(data)} >Edit Task</Button></Menu.Item>
                     <Menu.Item key="setting:3">Option 3</Menu.Item>
                     <Menu.Item key="setting:4">Option 4</Menu.Item>
                  </SubMenu>
