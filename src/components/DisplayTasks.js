@@ -1,7 +1,42 @@
 import React, { Component } from 'react';
+import 'pretty-checkbox'
 import '../App.css';
+import { Menu, Icon } from 'antd';
+import { Button, Modal, Form, Input, Popover} from 'antd';
+
+const { confirm } = Modal;
+
+const { SubMenu } = Menu;
 
 const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
+
+/*---------------for edit form----------------*/
+
+const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
+  // eslint-disable-next-line
+  class extends React.Component {
+    render() {
+      const { visible, onCancel, onCreate, form } = this.props;
+      const { getFieldDecorator } = form;
+      return (
+        <Modal
+          visible={visible}
+          title="Create a new collection"
+          okText="Edit"
+          onCancel={onCancel}
+          onOk={onCreate}
+        >
+          <Form layout="vertical">
+            <Form.Item label="Write Your Changes Here">
+              {getFieldDecorator('description')(<Input type="textarea" />)}
+            </Form.Item>
+          </Form>
+        </Modal>
+      );
+    }
+  },
+);
+/*------------------------------------------- */
 
 export default class DisplayTasks extends Component {
   constructor(props) {
@@ -13,12 +48,14 @@ export default class DisplayTasks extends Component {
       content: '',
       completed: false,
       editContent: '',
+      visible: false,
       editableTaskID: NaN
     };
   }
   componentDidMount() {
     this.getData();
   }
+
 
   handleDelete = async (id) => {
 
@@ -31,6 +68,23 @@ export default class DisplayTasks extends Component {
     });
     let newDeleted = array.filter(data => data.id !== id);
     this.setState({ items: newDeleted })
+  }
+ 
+
+  showDeleteConfirm = (data) => {
+    confirm({
+      title: 'Are you sure, you want to delete ?',
+      content: `${data.content}`,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: ()  => {
+          this.handleDelete(data.id);         
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 
   getData = async () => {
@@ -112,10 +166,42 @@ export default class DisplayTasks extends Component {
     return (
       <form className="TaskList" onSubmit={this.handleAdd}>
         <input className="addTaskInputBox" value={this.state.content} onChange={this.onAddChange} />
-        <button className="addTaskButton" >Add task</button>
+        <Button type="link" className="addTaskButton" style={{color: 'gray'}} onClick ={this.handleAdd}>
+        <Icon type="plus" style={{color:'red'}}/>
+        Add task
+        </Button>
       </form>
     );
   }
+
+  /*---------------------edit---------------*/
+  
+  showModal = () => {
+    this.setState({ visible: true });
+  };
+
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
+
+  handleCreate = () => {
+    const { form } = this.formRef.props;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+
+      console.log('Received values of form: ', values);
+      form.resetFields();
+      this.setState({ visible: false });
+    });
+  };
+
+  saveFormRef = formRef => {
+    this.formRef = formRef;
+  };
+
+
 
   onEditClick = (task) => {
     this.setState({editContent: task.content, editableTaskID: task.id}, () => console.log('set in state:', this.state.editContent));
@@ -157,6 +243,7 @@ export default class DisplayTasks extends Component {
       </form>
     );
   }
+  /*---------------------------------------------------*/
 
   render() {
     // console.log('inside render');
@@ -170,16 +257,40 @@ export default class DisplayTasks extends Component {
     else {
       return (
         <div>
-          {this.addTaskUI()}
           {this.editTaskUI()}
           {items.map((data) => (
-            <li key={data.id} style={{ listStyle: 'none' }}>
-              <input type="checkbox" onChange={() => this.handleCheckboxChange(data)} defaultChecked={data.completed} />
+            <li className = "listOfTask" key={data.id} style={{ listStyle: 'none' }}>
+                <div>
+              <input type="checkbox" className="pretty p-defalut p-round" onChange={() => this.handleCheckboxChange(data)} defaultChecked={data.completed} />
+
               {data.content}
-              <button onClick={() => this.handleDelete(data.id)}>DEL</button>
-              <button onClick={() => this.onEditClick(data)} >Edit</button>
+              </div>
+
+               
+                <div>
+              <Menu >
+                <SubMenu
+                    title={
+                        <span className="submenu-title-wrapper">
+                            . . .
+                        </span>
+                        }>
+                    <Menu.Item className = 'ant-menu-submenu-arrow' key="setting:1">
+                        <Button type="link" style={{color: 'red'}} onClick={() => this.showDeleteConfirm(data)}>
+                        <Icon type="delete" theme="filled"/>
+                        Delete Task
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item key="setting:2"><Button type = 'link' onClick={() => this.onEditClick(data)} >Edit Task</Button></Menu.Item>
+                    <Menu.Item key="setting:3">Option 3</Menu.Item>
+                    <Menu.Item key="setting:4">Option 4</Menu.Item>
+                 </SubMenu>
+                </Menu>
+                </div>
             </li>
+            
           ))}
+          {this.addTaskUI()}
         </div>
       );
     }

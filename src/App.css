@@ -13,7 +13,7 @@
   position:fixed;
   margin: 8px 0px 0px -50px;
 }
-input[type=text] {
+.searchbox {
   width: 130px;
   height : 10px;
   box-sizing: border-box;
@@ -27,8 +27,16 @@ input[type=text] {
   padding: 12px 20px 12px 40px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
+  z-index: 3;
 }
 
-input[type=text]:focus {
-  width: 40%;
+.searchbox:focus {
+  width: 56%;
+}
+.listOfTask { 
+  display: flex;
+  justify-content: space-between;
+}
+.ant-menu-submenu-arrow {
+  display:none;
 }
