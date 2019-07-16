@@ -11,7 +11,9 @@ export default class DisplayTasks extends Component {
       isLoaded: false,
       items: [],
       content: '',
-      completed: false
+      completed: false,
+      editContent: '',
+      editableTaskID: NaN
     };
   }
   componentDidMount() {
@@ -30,6 +32,7 @@ export default class DisplayTasks extends Component {
     let newDeleted = array.filter(data => data.id !== id);
     this.setState({ items: newDeleted })
   }
+
   getData = async () => {
     try {
       const res = await fetch(`https://api.todoist.com/rest/v1/tasks`, {
@@ -105,7 +108,6 @@ export default class DisplayTasks extends Component {
 
   }
 
-
   addTaskUI = () => {
     return (
       <form className="TaskList" onSubmit={this.handleAdd}>
@@ -115,8 +117,49 @@ export default class DisplayTasks extends Component {
     );
   }
 
+  onEditClick = (task) => {
+    this.setState({editContent: task.content, editableTaskID: task.id}, () => console.log('set in state:', this.state.editContent));
+  }
+
+  onEditSubmit = (data) => {
+    console.log('edited content:', this.state.editContent);
+    const taskID = this.state.editableTaskID;
+    let allItems = this.state.items.slice();
+    allItems.filter(task => task.id === taskID)[0].content = this.state.editContent;
+    this.setState({item: allItems});
+
+    const currentItem = this.state.items.filter(task => task.id === taskID)[0];
+    console.log(currentItem);
+
+    fetch(`https://api.todoist.com/rest/v1/tasks/${currentItem.id}`, {
+      method: 'POST',
+      body: JSON.stringify({ content: currentItem.content }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+  }
+
+  onEditChange = (event) => {
+    console.log('changed content:', event.target.value);
+    this.setState({ editContent: event.target.value});
+  }
+
+  editTaskUI = () => {
+    return(
+      <form onSubmit={(event) => { event.preventDefault(); this.onEditSubmit(this.state.items); this.setState({editContent: ''}) }}>
+        <label>
+          Edit Content:
+          <input type="text" value={this.state.editContent} onChange={this.onEditChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+
   render() {
-    console.log('inside render');
+    // console.log('inside render');
     const { error, isLoaded, items } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -128,11 +171,13 @@ export default class DisplayTasks extends Component {
       return (
         <div>
           {this.addTaskUI()}
+          {this.editTaskUI()}
           {items.map((data) => (
             <li key={data.id} style={{ listStyle: 'none' }}>
               <input type="checkbox" onChange={() => this.handleCheckboxChange(data)} defaultChecked={data.completed} />
               {data.content}
               <button onClick={() => this.handleDelete(data.id)}>DEL</button>
+              <button onClick={() => this.onEditClick(data)} >Edit</button>
             </li>
           ))}
         </div>
