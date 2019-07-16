@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import DisplayTasks from './DisplayTasks';
 import 'antd/dist/antd.css';
-import '../App.css';
 import { Layout, Menu, Icon } from 'antd';
+import '../App.css';
 import logo from '../logo/Todolist-home.jpg';
 
 const { SubMenu } = Menu;
@@ -25,9 +25,9 @@ export default class HomePage extends Component {
        
         style={{ lineHeight: '45px', background : '#db4c3f', float: 'right'}}>
 
-        <Menu.Item key="1" ><Icon type="plus" /></Menu.Item>
-        <Menu.Item key="2" ><Icon type="notification" theme="filled"/></Menu.Item>
-        <Menu.Item key="3" ><Icon type="setting" theme="filled" /></Menu.Item>
+        <Menu.Item key="1" ><Icon type="plus" style={{color: 'white' }}/></Menu.Item>
+        <Menu.Item key="2" ><Icon type="notification" theme="filled" style={{color: 'white' }}/></Menu.Item>
+        <Menu.Item key="3" ><Icon type="setting" theme="filled" style={{color: 'white' }}/></Menu.Item>
       </Menu>
     </Header>
     <Layout>
@@ -85,7 +85,8 @@ export default class HomePage extends Component {
           </Menu>
         </Sider>
         <Content style={{ padding: '0 24px', minHeight: 280 }}>
-        <DisplayTasks /> </Content>
+        <DisplayTasks /> 
+        </Content>
       </Layout>
     </Content>
   </Layout>

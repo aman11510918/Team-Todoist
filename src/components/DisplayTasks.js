@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
+import 'pretty-checkbox'
 import '../App.css';
+import { Menu, Icon } from 'antd';
+import { Modal, Button, Popover} from 'antd';
+
+const { confirm } = Modal;
+
+const { SubMenu } = Menu;
 
 const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 
@@ -18,6 +25,7 @@ export default class DisplayTasks extends Component {
     this.getData();
   }
 
+
   handleDelete = async (id) => {
 
     let array = [...this.state.items];
@@ -30,6 +38,31 @@ export default class DisplayTasks extends Component {
     let newDeleted = array.filter(data => data.id !== id);
     this.setState({ items: newDeleted })
   }
+
+  content = (
+    <div>
+      <p>Content</p>
+      <p>Content</p>
+    </div>
+  );
+  
+
+  showDeleteConfirm = (data) => {
+    confirm({
+      title: 'Are you sure, you want to delete ?',
+      content: `${data.content}`,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: ()  => {
+          this.handleDelete(data.id);         
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
+
   getData = async () => {
     try {
       const res = await fetch(`https://api.todoist.com/rest/v1/tasks`, {
@@ -110,7 +143,10 @@ export default class DisplayTasks extends Component {
     return (
       <form className="TaskList" onSubmit={this.handleAdd}>
         <input className="addTaskInputBox" value={this.state.content} onChange={this.onAddChange} />
-        <button className="addTaskButton" >Add task</button>
+        <Button type="link" className="addTaskButton" style={{color: 'gray'}} onClick ={this.handleAdd}>
+        <Icon type="plus" style={{color:'red'}}/>
+        Add task
+        </Button>
       </form>
     );
   }
@@ -127,14 +163,40 @@ export default class DisplayTasks extends Component {
     else {
       return (
         <div>
-          {this.addTaskUI()}
+        
           {items.map((data) => (
-            <li key={data.id} style={{ listStyle: 'none' }}>
-              <input type="checkbox" onChange={() => this.handleCheckboxChange(data)} defaultChecked={data.completed} />
+            <li className = "listOfTask" key={data.id} style={{ listStyle: 'none' }}>
+                <div>
+              <input type="checkbox" className="pretty p-defalut p-round" onChange={() => this.handleCheckboxChange(data)} defaultChecked={data.completed} />
+
               {data.content}
-              <button onClick={() => this.handleDelete(data.id)}>DEL</button>
+              </div>
+
+               
+                <div>
+              <Menu >
+                <SubMenu
+                    title={
+                        <span className="submenu-title-wrapper">
+                            . . .
+                        </span>
+                        }>
+                    <Menu.Item className = 'ant-menu-submenu-arrow' key="setting:1">
+                        <Button type="link" style={{color: 'red'}} onClick={() => this.showDeleteConfirm(data)}>
+                        <Icon type="delete" theme="filled"/>
+                        Delete Task
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item key="setting:2">Option 2</Menu.Item>
+                    <Menu.Item key="setting:3">Option 3</Menu.Item>
+                    <Menu.Item key="setting:4">Option 4</Menu.Item>
+                 </SubMenu>
+                </Menu>
+                </div>
             </li>
+            
           ))}
+          {this.addTaskUI()}
         </div>
       );
     }
