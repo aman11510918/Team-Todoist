@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import AddTask from './add'
+import EditOnClick from './edit'
+import { Modal, Button, Icon } from 'antd';
+const { confirm } = Modal;
+
 const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
 
 class Tasks extends Component {
@@ -8,6 +12,7 @@ class Tasks extends Component {
     super();
     this.state = {
       items: [],
+      key: ''
     }
   }
 
@@ -38,6 +43,35 @@ class Tasks extends Component {
         error
       });
     }
+  }
+
+  handleDelete = async (id) => {
+
+    let array = [...this.state.items];
+    await fetch(`https://api.todoist.com/rest/v1/tasks/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': "Bearer " + token,
+      },
+    });
+    let newDeleted = array.filter(data => data.id !== id);
+    this.setState({ items: newDeleted })
+  }
+ 
+  showDeleteConfirm = (data) => {
+    confirm({
+      title: 'Are you sure, you want to delete ?',
+      content: `${data.content}`,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: ()  => {
+          this.handleDelete(data.id);         
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 
   handleAddTask = async (newData) => {
@@ -91,8 +125,14 @@ class Tasks extends Component {
       <>
       {this.state.items.map(task =>
       <li className = "listOfTask" key={task.id} style={{ listStyle: 'none' }}>
+        <div>
         <input type="checkbox" className="pretty p-defalut p-round" onChange={() => this.handleCheckboxChange(task)} defaultChecked={task.completed} />
-      {Object.prototype.hasOwnProperty.call(task, 'due') ? <span>{task.content} {task.due.date}</span> : task.content }
+      <EditOnClick customKey={task.id} value={ Object.prototype.hasOwnProperty.call(task, 'due') ? <span>{task.content} {task.due.date}</span> : task.content }/>
+      </div>
+      <Button type="link" style={{color: 'red'}} onClick={() => this.showDeleteConfirm(task)}>
+      <Icon type="delete" theme="filled"/>
+        Delete Task
+      </Button>
       </li>
       )}
       <AddTask onAddSubmit={this.handleAddTask}/>
