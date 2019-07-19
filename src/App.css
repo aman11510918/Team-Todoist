@@ -1,33 +1,42 @@
-.App {
-  text-align: center;
+.header {
+  display:flex;
+  justify-content: space-between;
+
+}
+.logo {
+  width: 28px;
+  height: 28px;
+   margin: 8px 0 0 0;
+  float: left;
+}
+.searchbox {
+  position:fixed;
+  margin: 8px 0px 0px -50px;
+}
+.searchbox {
+  width: 130px;
+  height : 10px;
+  box-sizing: border-box;
+  border: 2px solid #db4c3f;
+  /* border-radius: 4px; */
+  font-size: 12px;
+  background-color: white;
+  /* background-image: url('searchicon.png'); */
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 3;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.searchbox:focus {
+  width: 56%;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.listOfTask { 
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ant-menu-submenu-arrow {
+  display:none;
 }
