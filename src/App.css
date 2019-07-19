@@ -40,3 +40,7 @@
 .ant-menu-submenu-arrow {
   display:none;
 }
+
+.ant-layout {
+  height: 48em;
+}
