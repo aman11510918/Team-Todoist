@@ -44,8 +44,8 @@ export default class HomePage extends Component {
 
 
 
-                  <Menu.Item key="3" style={{ display: 'flex', alignItems: 'center' }}>
-                    <Link to="/nextdays">
+                  <Menu.Item key="3">
+                    <Link to="/nextdays" style={{ display: 'flex', alignItems: 'center' }}>
                       <Icon type="schedule" style={{ fontSize: '22px', color: 'black' }} />
                       <span style={{ fontSize: '15px', color: '#333333' }}>Next 7 Days</span>
                     </Link>
