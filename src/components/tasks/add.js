@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Icon, DatePicker, Input } from 'antd';
+import { Button, Icon, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
-
-const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
 
 class AddTask extends Component {
   constructor(props) {
@@ -15,70 +13,47 @@ class AddTask extends Component {
     }
   }
 
-  // handleAddTask = async (event) => {
-
-  //   let task = {
-  //     content: this.state.content,
-  //     due_date: this.state.due_date
-  //   }
-
-  //   if (!this.state.content) return;
-
-  //   const request = await fetch('https://api.todoist.com/rest/v1/tasks', {
-  //     method: "POST",
-  //     body: JSON.stringify(task),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Authorization: `Bearer ${token}`
-  //     }
-  //   });
-  //   const response = await request.json();
-
-  //   const items = this.state.items.slice();
-  //   items.push(response);
-
-  //   this.state.content && this.setState({
-  //     content: '',
-  //     items: items,
-  //   }, () => console.log('after adding new task, all tasks are:', this.state.items));
-  // }
-
-  // onEnterSave = (event) => {
-  //   if (event.keyCode === 13) {
-  //     this.handleAddTask();
-  //   }
-  // }
-
   handleAddChange = (event) => {
     event.preventDefault();
     this.setState({ content: event.target.value });
   }
 
   handleDateSelect = (event) => {
-    this.setState({due_date: event.target.value});
+    this.setState({ due_date: event.target.value });
+  }
+
+  handleSelect = (event) => {
+    this.setState({due_date: event._d})
   }
 
   addTaskUI = () => {
     return (
       <form onSubmit={(event) => {
         event.preventDefault();
-        this.props.onAddSubmit({content: this.state.content, due_date: this.state.due_date});
+        this.props.onAddSubmit({ content: this.state.content, due_date: this.state.due_date });
         this.setState({ content: '', due_date: '' })
       }}>
-        <Input className="addTaskInputBox"
-          type="text" style={{ width: '200px' }}
+        <input className="addTaskInputBox"
+          type="text"
+          style={{ width: '700px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }}
           value={this.state.content}
           onChange={this.handleAddChange}
           onKeyDown={this.onEnterSave}
         />
-        <input type="date" defaultValue="" name="schedule" onChange={this.handleDateSelect}/>
-        <br/>
+        <DatePicker
+          suffixIcon={<Icon type='none' />}
+          format='D MMM'
+          placeholder='schedule'
+          style={{ width: '100px' }}
+          onChange={this.handleSelect}
+        />
+        <br />
         <Button
           type='danger'
-          style={{ backgroundColor: '#c53727', color: 'white' }}
+          style={{ backgroundColor: '#c53727', color: 'white', borderRadius: '5px', marginLeft: '7px' }}
           onClick={(event) => {
             event.preventDefault();
-            this.props.onAddSubmit({content: this.state.content, due_date: this.state.due_date});
+            this.props.onAddSubmit({ content: this.state.content, due_date: this.state.due_date });
             this.setState({ content: '', due_date: '' })
           }}
         >Add task</Button>
