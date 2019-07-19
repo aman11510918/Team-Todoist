@@ -1,14 +1,24 @@
 import '../../App.css'
 import 'antd/dist/antd.css';
 import React, { Component } from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import {Collapse, Layout, Menu, Icon } from 'antd';
 import { BrowserRouter as Router, Link} from 'react-router-dom';
 import logo from '/home/aman/Desktop/todolist/src/logo/Todolist-home.jpg';
 import RoutesFilter from '/home/aman/Desktop/todolist/src/components/RoutesFilter.jsx'
 
 const { Header, Content } = Layout;
+const { Panel } = Collapse;
 
 export default class HomePage extends Component {
+  genExtra = () => (
+    <Icon
+      type="plus"
+      onClick={event => {
+        // If you don't want click extra trigger collapse, you can prevent this:
+        event.stopPropagation();
+      }}
+    />
+  );
  
   render() {
 
@@ -48,6 +58,17 @@ export default class HomePage extends Component {
                     <span style={{ fontSize: '15px', color: '#333333' }}>Next 7 Days</span>
                     </Link>
                   </Menu.Item>
+
+                  <Collapse bordered={false} style={{backgroundColor:'#fafafa'}}>
+                    <Panel header="Projects" key="1" extra={this.genExtra()}>
+                      {
+                         <p style={{ paddingLeft: 24 }}>
+                         A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found
+                         as a welcome guest in many households across the world.
+                       </p>
+                      }
+                    </Panel>
+                  </Collapse>
                   
 
                 </Menu>

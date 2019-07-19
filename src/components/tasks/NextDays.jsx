@@ -14,7 +14,6 @@ class TodayTasks extends Component {
     this.state = {
       items: [],
       key: '',
-      isAdded: false,
     }
   }
 
@@ -122,22 +121,6 @@ class TodayTasks extends Component {
 
   }
 
-  handleAddPropagation = () => {
-    this.setState({isAdded: true}, () => this.state.isAdded)
-  }
-
-//   currDate = () => {
-//     var tempDate = new Date();
-//     var month = new Date().getMonth()+1;
-//     return (tempDate.getFullYear() + '-' + (month < 10 ? '0' + month : '' + month) + '-' + tempDate.getDate());
-// }
-
-//     handleDueDate = (item) => {
-//     return (
-//         Object.prototype.hasOwnProperty.call(item, 'due') ? Date.parse(item.due.date) : ""
-//     );
-// }
-
   render() {
     const filteredItems = this.state.items.filter(value => (Math.abs((moment().diff(value.due.date, 'days'))) < 7));
     return (
@@ -154,7 +137,7 @@ class TodayTasks extends Component {
       </Button>
       </li>
       )}
-      <AddTask onAddSubmit={this.handleAddTask} isAdded={() => this.handleAddPropagation()}/>
+      <AddTask onAddSubmit={this.handleAddTask}/>
       </>
      );
   }

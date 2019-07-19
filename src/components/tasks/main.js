@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AddTask from './add'
 import EditOnClick from './edit'
-import { Modal, Button, Icon } from 'antd';
+import { Popover, Modal, Button, Icon } from 'antd';
 const { confirm } = Modal;
 
 const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
@@ -12,8 +12,7 @@ class Tasks extends Component {
     super();
     this.state = {
       items: [],
-      key: '',
-      isAdded: false,
+      key: ''
     }
   }
 
@@ -121,27 +120,49 @@ class Tasks extends Component {
 
   }
 
-  handleAddPropagation = () => {
-    this.setState({isAdded: true}, () => this.state.isAdded)
-  }
+  // content = (
+  //   <div>
+  //     <Button type='link' style={{color:'#333333'}} onClick={() => this.showDeleteConfirm(task)}><Icon type='delete' style={{color:'gray'}}/>Delete Task</Button>
+  //     <br />
+  //     <Button type="link" style={{color:'#333333'}}><Icon type='edit' style={{color:'gray'}}/>Edit Task</Button>
+  //   </div>
+  // );
 
   render() {
     return (
-      <>
+      <div>
       {this.state.items.map(task =>
+      <div className='displayList' >
       <li className = "listOfTask" key={task.id} style={{ listStyle: 'none' }}>
-        <div>
+        <div style={{width:'41em'}}>
         <input type="radio" className="pretty p-defalut p-round" onChange={() => this.handleCheckboxChange(task)} defaultChecked={task.completed} />
       <EditOnClick customKey={task.id} value={ Object.prototype.hasOwnProperty.call(task, 'due') ? <span>{task.content} {task.due.date}</span> : task.content }/>
       </div>
-      <Button type="link" style={{color: 'red'}} onClick={() => this.showDeleteConfirm(task)}>
+      
+      {/* <Button type="link" style={{color: 'red'}} onClick={() => this.showDeleteConfirm(task)}>
       <Icon type="delete" theme="filled"/>
         Delete Task
-      </Button>
+      </Button> */}
       </li>
+      <div style={{ clear: 'both', whiteSpace: 'wrap' }}>
+        <Popover 
+        width='120'
+        placement="bottomRight"
+        content={
+          <div>
+            <Button type='link' style={{color:'#333333'}} onClick={() => this.showDeleteConfirm(task)}><Icon type='delete' style={{color:'gray'}}/>Delete Task</Button>
+            <br />
+            <Button type="link" style={{color:'#333333'}}><Icon type='edit' style={{color:'gray'}}/>Edit Task</Button>
+          </div>
+        } 
+        trigger="focus">
+        <Button type='link' style={{color:'black'}}>. . .</Button>
+        </Popover>
+      </div>
+      </div>
       )}
-      <AddTask onAddSubmit={this.handleAddTask} isAdded={() => this.handleAddPropagation()}/>
-      </>
+      <AddTask onAddSubmit={this.handleAddTask} />
+      </div>
      );
   }
 }

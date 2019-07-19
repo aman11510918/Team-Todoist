@@ -13,7 +13,6 @@ class TodayTasks extends Component {
     this.state = {
       items: [],
       key: '',
-      isAdded: false,
     }
   }
 
@@ -121,10 +120,6 @@ class TodayTasks extends Component {
 
   }
 
-  handleAddPropagation = () => {
-    this.setState({isAdded: true}, () => this.state.isAdded)
-  }
-
   currDate = () => {
     var tempDate = new Date();
     var month = new Date().getMonth()+1;
@@ -153,7 +148,7 @@ class TodayTasks extends Component {
       </Button>
       </li>
       )}
-      <AddTask onAddSubmit={this.handleAddTask} isAdded={() => this.handleAddPropagation()}/>
+      <AddTask onAddSubmit={this.handleAddTask} />
       </>
      );
   }
