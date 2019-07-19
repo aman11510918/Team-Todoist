@@ -6,7 +6,7 @@ const { confirm } = Modal;
 
 const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 
-class Tasks extends Component {
+class TodayTasks extends Component {
 
   constructor() {
     super();
@@ -125,10 +125,23 @@ class Tasks extends Component {
     this.setState({isAdded: true}, () => this.state.isAdded)
   }
 
+  currDate = () => {
+    var tempDate = new Date();
+    var month = new Date().getMonth()+1;
+    return (tempDate.getFullYear() + '-' + (month < 10 ? '0' + month : '' + month) + '-' + tempDate.getDate());
+}
+
+    handleDueDate = (item) => {
+    return (
+        Object.prototype.hasOwnProperty.call(item, 'due') ? Date.parse(item.due.date) : ""
+    );
+}
+
   render() {
+    const filteredItems =  this.state.items.filter( item =>  this.handleDueDate(item) === Date.parse(this.currDate()));
     return (
       <>
-      {this.state.items.map(task =>
+      {filteredItems.map(task =>
       <li className = "listOfTask" key={task.id} style={{ listStyle: 'none' }}>
         <div>
         <input type="radio" className="pretty p-defalut p-round" onChange={() => this.handleCheckboxChange(task)} defaultChecked={task.completed} />
@@ -146,4 +159,4 @@ class Tasks extends Component {
   }
 }
  
-export default Tasks;
+export default TodayTasks;

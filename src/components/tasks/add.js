@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Icon, DatePicker, Input } from 'antd';
+import { Button, Icon, Input } from 'antd';
 import 'antd/dist/antd.css';
 
-const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
+// const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
 
 class AddTask extends Component {
   constructor(props) {
