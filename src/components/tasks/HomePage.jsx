@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import AddTask from '../components/tasks/main'
+import AddTask from '/home/guest/programs/mb_training/Team-Todoist/src/components/tasks/main.js'
 import 'antd/dist/antd.css';
 import { Layout, Menu, Icon } from 'antd';
-import '../App.css';
-import logo from '../logo/Todolist-home.jpg';
+import '/home/guest/programs/mb_training/Team-Todoist/src/App.css';
+import logo from '/home/guest/programs/mb_training/Team-Todoist/src/logo/Todolist-home.jpg';
 const { Header, Content, Sider } = Layout;
 
 export default class HomePage extends Component {
