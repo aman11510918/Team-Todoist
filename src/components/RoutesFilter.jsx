@@ -15,6 +15,7 @@ class RoutesFilter extends Component {
                 <div>
                     <Switch>
                     <Route path={"/"} exact component={Home}/>
+                    <Route path={"/inbox"} component={Home}/>
                     <Route path={"/today"} component={Today}/>
                     <Route path={"/nextdays"} component={NextDays} />
                     </Switch>

@@ -1,4 +1,5 @@
 import React, {useState, useEffect } from 'react';
+import moment from 'moment'
 
 const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 
@@ -11,9 +12,9 @@ function Today()
     },[])
 
     const [items, setItems] = useState([]);
-
+ 
     const fetchItems = async () => {
-        const data = await fetch(`https://api.todoist.com/rest/v1/tasks`, {
+        let data = await fetch(`https://api.todoist.com/rest/v1/tasks`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -22,14 +23,21 @@ function Today()
                 },
             })
             const items = await data.json();
-            console.log(items);
+            // console.log(items);
             setItems(items);
-}
+    }
+
+    const currDate = () => {
+        var tempDate = new Date();
+        var month = new Date().getMonth()+1;
+        return (tempDate.getFullYear() + '-' + (month < 10 ? '0' + month : '' + month) + '-' + tempDate.getDate());
+    }
+
+    const filteredItems =  items.filter( item =>  Date.parse(item.due.date) === Date.parse(currDate()));
     return (
         <div>
-            {items.map(item => (
-                <h1>{item.content}</h1>
-            ))}
+            <h2>Today</h2>
+               {filteredItems.map(val => <h2 key = {val.id}>{val.content}</h2>)}
         </div>
     );
 }

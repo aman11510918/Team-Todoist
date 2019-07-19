@@ -19,7 +19,7 @@ export default class HomePage extends Component {
         <input className = "searchbox" type="text" name="search" placeholder="Quick Find" />
       </form> */}
 
-      <Menu
+      {/* <Menu
         mode="horizontal"
        
         style={{ lineHeight: '45px', background : '#db4c3f', float: 'right'}}>
@@ -27,7 +27,7 @@ export default class HomePage extends Component {
         <Menu.Item key="1" ><Icon type="plus" style={{color: 'white' }}/></Menu.Item>
         <Menu.Item key="2" ><Icon type="notification" theme="filled" style={{color: 'white' }}/></Menu.Item>
         <Menu.Item key="3" ><Icon type="setting" theme="filled" style={{color: 'white' }}/></Menu.Item>
-      </Menu>
+      </Menu> */}
     </Header>
     <Layout>
     <Content style={{ padding: '0 50px' }}>
@@ -35,14 +35,15 @@ export default class HomePage extends Component {
         <Sider width={200} style={{ background: '#fff' }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
             style={{ height: '100%' }}
           >
               
             <Menu.Item key="1">
+              <Link to="/Inbox">
             <Icon type="inbox" />
             Inbox
+            </Link>
           </Menu.Item>
 
           
@@ -54,12 +55,14 @@ export default class HomePage extends Component {
           </Menu.Item>
         
 
-          {/* <Link to="nextdays"> */}
+         
           <Menu.Item key="3">
+          <Link to="nextdays">
             <Icon type="calendar" />
             Next 7 Days
+            </Link>
           </Menu.Item>
-          {/* </Link> */}
+          
 
           </Menu>
         </Sider>
