@@ -49,7 +49,7 @@ class EditOnClick extends Component {
   editViewUI = () => {
     return (
       <div>
-        <input className='' type="text" style={{ width: '700px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }} defaultValue={this.state.value} ref='newEditedTask' onKeyDown={this.onEnterSave} />
+        <input className='' type="text" style={{ width: '500px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }} defaultValue={this.state.value} ref='newEditedTask' onKeyDown={this.onEnterSave} />
         <br />
         <Button type='danger' style={{ backgroundColor: '#c53727', color: 'white', borderRadius: '5px', marginLeft: '7px' }} className='' onClick={this.handleEditSave}>Save</Button>
         <Button type="link" className='' style={{ color: '#555555', textDecoration: 'none' }} onClick={this.toggleUI}>Cancel</Button>

@@ -6,7 +6,7 @@ import moment from 'moment'
 
 const { confirm } = Modal;
 
-const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
+const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
 
 class Tasks extends Component {
 
@@ -140,7 +140,8 @@ class Tasks extends Component {
     return (
       <>
         {this.state.items.map(task =>
-          <li className="listOfTask" key={task.id} style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
+          <li className="listOfTask" key={task.id}
+          style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
             <div>
               <input type="checkbox" className="checkbox"
                 onChange={() => this.handleCheckboxChange(task)}

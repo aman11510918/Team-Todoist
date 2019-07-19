@@ -6,7 +6,7 @@ import 'antd/dist/antd.css';
 
 import '/home/guest/programs/mb_training/Team-Todoist/src/App.css';
 import logo from '/home/guest/programs/mb_training/Team-Todoist/src/logo/Todolist-home.jpg';
-import RoutesFilter from '/home/aman/Desktop/todolist/src/components/RoutesFilter.jsx'
+import RoutesFilter from '/home/guest/programs/mb_training/Team-Todoist/src/components/RoutesFilter.jsx'
 
 const { Header, Content } = Layout;
 
@@ -27,16 +27,16 @@ export default class HomePage extends Component {
                   mode="inline"
                   style={{ height: '100%', background: '#fafafa' }}>
 
-                  <Menu.Item key="1" style={{ display: 'flex', alignItems: 'center' }}>
-                    <Link to="/">
+                  <Menu.Item key="1" >
+                    <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
                       <Icon type="inbox" style={{ fontSize: '25px', color: 'black' }} />
                       <span style={{ fontSize: '15px', color: '#333333' }}>Inbox</span>
                     </Link>
                   </Menu.Item>
 
 
-                  <Menu.Item key="2" style={{ display: 'flex', alignItems: 'center' }}>
-                    <Link to="/today">
+                  <Menu.Item key="2">
+                    <Link to="/today" style={{ display: 'flex', alignItems: 'center' }}>
                       <Icon type="calendar" style={{ fontSize: '22px', color: 'black' }} />
                       <span style={{ fontSize: '15px', color: '#333333' }}>Today</span>
                     </Link>

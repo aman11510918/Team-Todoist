@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Icon, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
+import moment from 'moment';
 
 class AddTask extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class AddTask extends Component {
 
   handleSelect = (event) => {
     this.setState({due_date: event._d})
+    console.log(this.state.due_date);
   }
 
   addTaskUI = () => {
@@ -43,9 +45,10 @@ class AddTask extends Component {
         <DatePicker
           suffixIcon={<Icon type='none' />}
           format='D MMM'
-          placeholder='schedule'
           style={{ width: '100px' }}
           onChange={this.handleSelect}
+          // defaultValue={moment(new Date().toISOString().split('T')[0], 'YYYY-MM-DD')}
+          placeholder='schedule'
         />
         <br />
         <Button

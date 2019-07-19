@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import AddTask from './add'
 import EditOnClick from './edit'
 import { Modal, Button, Icon } from 'antd';
+import moment from 'moment'
+
 const { confirm } = Modal;
 
-const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
+
+const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
 
 class TodayTasks extends Component {
 
@@ -58,7 +61,7 @@ class TodayTasks extends Component {
     let newDeleted = array.filter(data => data.id !== id);
     this.setState({ items: newDeleted })
   }
- 
+
   showDeleteConfirm = (data) => {
     confirm({
       title: 'Are you sure, you want to delete ?',
@@ -66,8 +69,8 @@ class TodayTasks extends Component {
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
-      onOk: ()  => {
-          this.handleDelete(data.id);         
+      onOk: () => {
+        this.handleDelete(data.id);
       },
       onCancel() {
         console.log('Cancel');
@@ -79,7 +82,7 @@ class TodayTasks extends Component {
 
     let task = {
       content: newData.content,
-      due_date: newData.due_date
+      due_date: new Date(newData.due_date).toISOString().split('T')[0]
     }
 
     if (!newData.content) return;
@@ -93,7 +96,7 @@ class TodayTasks extends Component {
       }
     });
     const response = await request.json();
-
+    console.log(response);
     const items = this.state.items.slice();
     items.push(response);
 
@@ -121,42 +124,56 @@ class TodayTasks extends Component {
 
   }
 
-  handleAddPropagation = () => {
-    this.setState({isAdded: true}, () => this.state.isAdded)
-  }
-
   currDate = () => {
     var tempDate = new Date();
-    var month = new Date().getMonth()+1;
+    var month = new Date().getMonth() + 1;
     return (tempDate.getFullYear() + '-' + (month < 10 ? '0' + month : '' + month) + '-' + tempDate.getDate());
-}
+  }
 
-    handleDueDate = (item) => {
+  /**
+   * @return if item has a due date or not
+   */
+  handleDueDate = (item) => {
     return (
-        Object.prototype.hasOwnProperty.call(item, 'due') ? Date.parse(item.due.date) : ""
+      Object.prototype.hasOwnProperty.call(item, 'due') ? Date.parse(item.due.date) : ""
     );
-}
+  }
+
+  handleDates = (dateString) => {
+    let date = moment(dateString);
+    if (moment().diff(date, 'days') >= 1) {
+      return date.fromNow();
+    }
+    else {
+      return date.calendar().split(' ')[0];
+    }
+  }
 
   render() {
-    const filteredItems =  this.state.items.filter( item =>  this.handleDueDate(item) === Date.parse(this.currDate()));
+    const tasksWithDueDate = this.state.items.filter(item => this.handleDueDate(item) === Date.parse(this.currDate()));
     return (
       <>
-      {filteredItems.map(task =>
-      <li className = "listOfTask" key={task.id} style={{ listStyle: 'none' }}>
-        <div>
-        <input type="radio" className="pretty p-defalut p-round" onChange={() => this.handleCheckboxChange(task)} defaultChecked={task.completed} />
-      <EditOnClick customKey={task.id} value={ Object.prototype.hasOwnProperty.call(task, 'due') ? <span>{task.content} {task.due.date}</span> : task.content }/>
-      </div>
-      <Button type="link" style={{color: 'red'}} onClick={() => this.showDeleteConfirm(task)}>
-      <Icon type="delete" theme="filled"/>
-        Delete Task
-      </Button>
-      </li>
-      )}
-      <AddTask onAddSubmit={this.handleAddTask} isAdded={() => this.handleAddPropagation()}/>
+        {tasksWithDueDate.map(task =>
+          <li className="listOfTask" key={task.id}
+            style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
+            <div>
+              <input type="radio" className="checkbox"
+                onChange={() => this.handleCheckboxChange(task)}
+                defaultChecked={task.completed} />
+              <EditOnClick customKey={task.id} value={task.content} />
+            </div>
+            <div className='due' style={{ float: 'right' }}>{Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
+              <Button type="link" style={{ color: 'red' }} onClick={() => this.showDeleteConfirm(task)}>
+                <Icon type="delete" theme="filled" />
+                Delete Task
+              </Button>
+            </div>
+          </li>
+        )}
+        <AddTask onAddSubmit={this.handleAddTask} isAdded={() => this.handleAddPropagation()} />
       </>
-     );
+    );
   }
 }
- 
+
 export default TodayTasks;
