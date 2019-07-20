@@ -64,8 +64,7 @@ export default class HomePage extends Component {
                     <Panel header="Projects" key="1" extra={this.genExtra()}>
                       {
                         <p style={{ paddingLeft: 24 }}>
-                          A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found
-                          as a welcome guest in many households across the world.
+                          sample projct panel
                        </p>
                       }
                     </Panel>

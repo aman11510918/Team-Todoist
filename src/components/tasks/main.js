@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import AddTask from './add'
 import EditOnClick from './edit'
 import moment from 'moment'
-import { Popover, Modal, Button, Icon } from 'antd';
+import { Popover, Modal, Button, Icon, Radio } from 'antd';
 
 const { confirm } = Modal;
 
 const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
+// const token = '6353a697208d207658daa816471b1da86cbc2c96';
+// const token = '1af2e951c667fdb4790f2a868eb63644ab95421c';
 
 class Tasks extends Component {
 
@@ -143,19 +145,21 @@ class Tasks extends Component {
     return (
       <>
         {this.state.items.map(task =>
+        <div className = 'displayList'>
           <li className="listOfTask" key={task.id}
             style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
             <div>
-              { !(task.id === this.state.editableTaskID) && <input type="radio" className="checkbox"
+              { !(task.id === this.state.editableTaskID) && <Radio size='large'
                 onChange={() => this.handleCheckboxChange(task)}
                 defaultChecked={task.completed}
                 style={{marginRight: '10px'}}
               />}
               <EditOnClick customKey={task.id} value={task.content} onEditClick={this.handleEditToggle}/>
             </div>
-            <div className='due' style={{fontSize: '14px'}} >
+            <div className='due' style={{fontSize: '10px'}} >
               {!(task.id === this.state.editableTaskID) && Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
             </div>
+            </li>
             <div style={{ clear: 'both', whiteSpace: 'wrap' }}>
               <Popover
                 width='120'
@@ -165,14 +169,14 @@ class Tasks extends Component {
                   <div>
                     <Button type='link' style={{ color: '#333333' }} onClick={() => this.showDeleteConfirm(task)}><Icon type='delete' style={{ color: 'gray' }} />Delete Task</Button>
                     <br />
-                    <Button type="link" style={{ color: '#333333' }}><Icon type='edit' style={{ color: 'gray' }} />Edit Task</Button>
+                    {/* <Button type="link" style={{ color: '#333333' }}><Icon type='edit' style={{ color: 'gray' }} />Edit Task</Button> */}
                   </div>
                 }
               >
                 <Button type='link' style={{ color: 'black' }}>. . .</Button>
               </Popover>
             </div>
-          </li>
+          </div>
         )}
         <AddTask onAddSubmit={this.handleAddTask} />
       </>

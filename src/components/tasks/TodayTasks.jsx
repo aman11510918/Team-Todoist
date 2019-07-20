@@ -153,6 +153,7 @@ class TodayTasks extends Component {
     return (
       <>
         {tasksWithDueDate.map(task =>
+        <div className = 'displayList'>
           <li className="listOfTask" key={task.id}
             style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
             <div>
@@ -166,6 +167,7 @@ class TodayTasks extends Component {
             <div className='due' style={{ float: 'right' }}>
               {Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
             </div>
+            </li>
             <div style={{ clear: 'both', whiteSpace: 'wrap' }}>
               <Popover
                 width='120'
@@ -175,14 +177,14 @@ class TodayTasks extends Component {
                   <div>
                     <Button type='link' style={{ color: '#333333' }} onClick={() => this.showDeleteConfirm(task)}><Icon type='delete' style={{ color: 'gray' }} />Delete Task</Button>
                     <br />
-                    <Button type="link" style={{ color: '#333333' }}><Icon type='edit' style={{ color: 'gray' }} />Edit Task</Button>
+                    {/* <Button type="link" style={{ color: '#333333' }}><Icon type='edit' style={{ color: 'gray' }} />Edit Task</Button> */}
                   </div>
                 }
               >
                 <Button type='link' style={{ color: 'black' }}>. . .</Button>
               </Popover>
             </div>
-          </li>
+            </div>
         )}
         <AddTask onAddSubmit={this.handleAddTask} />
       </>

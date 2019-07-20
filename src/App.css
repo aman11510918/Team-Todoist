@@ -11,6 +11,7 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #e8e8e8;
+  width: -webkit-fill-available;
 }
 
 .displayList {
@@ -40,15 +41,6 @@
   border-right: none;
 }
 
-/* .ant-popover-arrow
-{
-right: 16px;
-}
-.ant-popover-content
-{
-width: 129px;
-} */
-
 .ant-popover,
 .ant-popover-placement-bottomRight {
   left: 12px;
@@ -59,4 +51,8 @@ width: 129px;
 .ant-collapse-borderless,
 .ant-collapse-icon-position-left {
   background-color: #fafafa
+}
+
+.due {
+  float: right;
 }
