@@ -36,13 +36,7 @@ class EditOnClick extends Component {
         })
     });
   }
-
-  onEnterSave = (event) => {
-    if (event.keyCode === 13) {
-      this.handleEditSave();
-    }
-  }
-
+  
   toggleUI = () => {
     this.setState({ isEditable: !this.state.isEditable })
   }
@@ -50,7 +44,7 @@ class EditOnClick extends Component {
   editViewUI = () => {
     return (
       <div style={{minHeight: '100px', display: 'flex', alignItems: 'center'}}>
-        <input className='' type="text" style={{ width: '350px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }} defaultValue={this.state.value} ref='newEditedTask' onKeyDown={this.onEnterSave} />
+        <input className='' type="text" style={{ width: '350px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }} defaultValue={this.state.value} ref='newEditedTask' />
         <></>
         <Button type='danger' style={{ backgroundColor: '#c53727', color: 'white', borderRadius: '5px', marginLeft: '7px' }} className='' onClick={() => { this.handleEditSave(); this.toggleUI(); this.props.onEditClick({isEditable: !this.state.isEditable})} }>Save</Button>
         <Button type="link" className='' style={{ color: '#555555', textDecoration: 'none' }} onClick={ () => { this.toggleUI(); this.props.onEditClick({isEditable: !this.state.isEditable}) } }>Cancel</Button>

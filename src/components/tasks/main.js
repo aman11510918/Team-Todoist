@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AddTask from './add'
 import EditOnClick from './edit'
 import moment from 'moment'
-import { Popover, Modal, Button, Icon, Radio } from 'antd';
+import { Popover, Modal, Button, Icon, Radio, Tooltip } from 'antd';
 
 const { confirm } = Modal;
 
@@ -156,9 +156,11 @@ class Tasks extends Component {
               />}
               <EditOnClick customKey={task.id} value={task.content} onEditClick={this.handleEditToggle}/>
             </div>
+            {/* <Tooltip placement='bottom' title={somecallback}> */}
             <div className='due' style={{fontSize: '10px'}} >
               {!(task.id === this.state.editableTaskID) && Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
             </div>
+            {/* </Tooltip> */}
             </li>
             <div style={{ clear: 'both', whiteSpace: 'wrap' }}>
               <Popover
