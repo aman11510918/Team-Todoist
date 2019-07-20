@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AddTask from './add'
 import EditOnClick from './edit'
 import { Modal, Button, Icon } from 'antd';
-import  moment from "moment";
+import moment from "moment";
 const { confirm } = Modal;
 
 // const aman = "78fcfd26adb47157e35612abb3649bdf71cc1400";
@@ -15,7 +15,6 @@ class TodayTasks extends Component {
     this.state = {
       items: [],
       key: '',
-      isAdded: false,
     }
   }
 
@@ -60,7 +59,7 @@ class TodayTasks extends Component {
     let newDeleted = array.filter(data => data.id !== id);
     this.setState({ items: newDeleted })
   }
- 
+
   showDeleteConfirm = (data) => {
     confirm({
       title: 'Are you sure, you want to delete ?',
@@ -68,8 +67,8 @@ class TodayTasks extends Component {
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
-      onOk: ()  => {
-          this.handleDelete(data.id);         
+      onOk: () => {
+        this.handleDelete(data.id);
       },
       onCancel() {
         console.log('Cancel');
@@ -122,7 +121,7 @@ class TodayTasks extends Component {
     });
 
   }
-  
+
   handleDates = (dateString) => {
     let date = moment(dateString);
     if (moment().diff(date, 'days') >= 1) {
@@ -133,42 +132,42 @@ class TodayTasks extends Component {
     }
   }
 
-    handleDueDate = (item) => {
+  handleDueDate = (item) => {
     return (
-        Object.prototype.hasOwnProperty.call(item, 'due') ? item.due.date : ""
+      Object.prototype.hasOwnProperty.call(item, 'due') ? item.due.date : ""
     );
-}
+  }
 
   render() {
-    const tasksWithDueDatesLessThanSevenDays = 
-    this.state.items.filter(value => {
-      const foramattedDate = Math.abs((moment().diff(this.handleDueDate(value), 'days')));
-      return (foramattedDate < 7  && foramattedDate >= 0 );
-    });
+    const tasksWithDueDatesLessThanSevenDays =
+      this.state.items.filter(value => {
+        const foramattedDate = Math.abs((moment().diff(this.handleDueDate(value), 'days')));
+        return (foramattedDate < 7 && foramattedDate >= 0);
+      });
     return (
       <>
-      {tasksWithDueDatesLessThanSevenDays.map(task =>
-      <li className="listOfTask" key={task.id}
-      style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
-        <div>
-          <input type="checkbox" className="checkbox"
-            onChange={() => this.handleCheckboxChange(task)}
-            defaultChecked={task.completed}
-          />
-          <EditOnClick customKey={task.id} value={task.content} />
-        </div>
-        <div className='due' style={{ float: 'right' }}>{Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
-          <Button type="link" style={{ color: 'red' }} onClick={() => this.showDeleteConfirm(task)}>
-            <Icon type="delete" theme="filled" />
-            Delete Task
-    </Button>
-        </div>
-      </li>
-    )}
-      <AddTask onAddSubmit={this.handleAddTask} />
+        {tasksWithDueDatesLessThanSevenDays.map(task =>
+          <li className="listOfTask" key={task.id}
+            style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
+            <div>
+              <input type="checkbox" className="checkbox"
+                onChange={() => this.handleCheckboxChange(task)}
+                defaultChecked={task.completed}
+              />
+              <EditOnClick customKey={task.id} value={task.content} />
+            </div>
+            <div className='due' style={{ float: 'right' }}>{Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
+              <Button type="link" style={{ color: 'red' }} onClick={() => this.showDeleteConfirm(task)}>
+                <Icon type="delete" theme="filled" />
+                Delete Task
+          </Button>
+            </div>
+          </li>
+        )}
+        <AddTask onAddSubmit={this.handleAddTask} />
       </>
-     );
+    );
   }
 }
- 
+
 export default TodayTasks;

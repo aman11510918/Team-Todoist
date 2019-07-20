@@ -1,31 +1,62 @@
 .logo {
   width: 28px;
   height: 28px;
-   margin: 8px 0 0 115px;
+  margin: 8px 0 0 115px;
   float: left;
   cursor: pointer;
 }
 
-.listOfTask { 
+.listOfTask {
   height: 3.5em;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #e8e8e8;
 }
 
+.displayList {
+  display: flex;
+  justify-content: space-between;
+}
+
 .ant-menu-submenu-arrow {
-  display:none;
+  display: none;
 }
 
 .ant-layout {
   height: 48em;
 }
 
-.ant-menu,.ant-menu-light,.ant-menu-root,.ant-menu-inline{
-  margin:45px 0px 0px 160px;
-  width:262px;
+.ant-menu,
+.ant-menu-light,
+.ant-menu-root,
+.ant-menu-inline {
+  margin: 45px 0px 0px 160px;
+  width: 262px;
 }
 
-.ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left{
+.ant-menu-inline,
+.ant-menu-vertical,
+.ant-menu-vertical-left {
   border-right: none;
+}
+
+/* .ant-popover-arrow
+{
+right: 16px;
+}
+.ant-popover-content
+{
+width: 129px;
+} */
+
+.ant-popover,
+.ant-popover-placement-bottomRight {
+  left: 12px;
+  top: 44px;
+}
+
+.ant-collapse,
+.ant-collapse-borderless,
+.ant-collapse-icon-position-left {
+  background-color: #fafafa
 }

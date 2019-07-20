@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Icon } from 'antd';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import '../../App.css'
 import 'antd/dist/antd.css';
@@ -7,10 +6,20 @@ import 'antd/dist/antd.css';
 import '/home/guest/programs/mb_training/Team-Todoist/src/App.css';
 import logo from '/home/guest/programs/mb_training/Team-Todoist/src/logo/Todolist-home.jpg';
 import RoutesFilter from '/home/guest/programs/mb_training/Team-Todoist/src/components/RoutesFilter.jsx'
+import { Collapse, Layout, Menu, Icon } from 'antd';
 
 const { Header, Content } = Layout;
+const { Panel } = Collapse;
 
 export default class HomePage extends Component {
+
+  genExtra = () => (
+    <Icon type="plus"
+      onClick={event => {
+        event.stopPropagation();
+      }}
+    />
+  );
 
   render() {
 
@@ -51,6 +60,16 @@ export default class HomePage extends Component {
                     </Link>
                   </Menu.Item>
 
+                  <Collapse bordered={false} style={{ backgroundColor: '#fafafa' }}>
+                    <Panel header="Projects" key="1" extra={this.genExtra()}>
+                      {
+                        <p style={{ paddingLeft: 24 }}>
+                          A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found
+                          as a welcome guest in many households across the world.
+                       </p>
+                      }
+                    </Panel>
+                  </Collapse>
 
                 </Menu>
               </div>

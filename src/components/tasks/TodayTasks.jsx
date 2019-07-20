@@ -16,7 +16,6 @@ class TodayTasks extends Component {
     this.state = {
       items: [],
       key: '',
-      isAdded: false,
     }
   }
 
@@ -170,7 +169,7 @@ class TodayTasks extends Component {
             </div>
           </li>
         )}
-        <AddTask onAddSubmit={this.handleAddTask} isAdded={() => this.handleAddPropagation()} />
+        <AddTask onAddSubmit={this.handleAddTask} />
       </>
     );
   }
