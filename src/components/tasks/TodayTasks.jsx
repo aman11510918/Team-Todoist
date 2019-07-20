@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AddTask from './add'
 import EditOnClick from './edit'
-import { Popover, Modal, Button, Icon } from 'antd';
+import { Popover, Modal, Button, Icon, Radio } from 'antd';
 import moment from 'moment'
 
 const { confirm } = Modal;
@@ -16,6 +16,8 @@ class TodayTasks extends Component {
     this.state = {
       items: [],
       key: '',
+      isEditable: false,
+      editableTaskID: ''
     }
   }
 
@@ -148,6 +150,11 @@ class TodayTasks extends Component {
     }
   }
 
+  handleEditToggle = (props) => {
+    console.log(props);
+    this.setState({isEditable: props.isEditable, editableTaskID: props.editableTaskID}, () => {console.log('editable status:', this.state.isEditable, 'with id:', this.state.editableTaskID)})
+  }
+
   render() {
     const tasksWithDueDate = this.state.items.filter(item => this.handleDueDate(item) === Date.parse(this.currDate()));
     return (
@@ -157,15 +164,15 @@ class TodayTasks extends Component {
           <li className="listOfTask" key={task.id}
             style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
             <div>
-              <input type="radio" className="checkbox"
+              { !(task.id === this.state.editableTaskID) && <Radio size='large'
                 onChange={() => this.handleCheckboxChange(task)}
                 defaultChecked={task.completed}
-                style={{ marginRight: '10px' }}
-              />
-              <EditOnClick customKey={task.id} value={task.content} />
+                style={{marginRight: '10px'}}
+              />}
+              <EditOnClick customKey={task.id} value={task.content} onEditClick={this.handleEditToggle}/>
             </div>
-            <div className='due' style={{ float: 'right' }}>
-              {Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
+            <div className='due' style={{fontSize: '10px'}} >
+              {!(task.id === this.state.editableTaskID) && Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
             </div>
             </li>
             <div style={{ clear: 'both', whiteSpace: 'wrap' }}>

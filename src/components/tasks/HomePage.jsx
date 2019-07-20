@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import '../../App.css'
+import '/home/guest/programs/mb_training/Team-Todoist/src/App.css'
 import 'antd/dist/antd.css';
 
 import '/home/guest/programs/mb_training/Team-Todoist/src/App.css';
