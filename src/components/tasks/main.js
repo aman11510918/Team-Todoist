@@ -84,6 +84,7 @@ class Tasks extends Component {
     }
 
     if (!newData.content) return;
+    if (!moment(newData.due_date).isValid()) return;
 
     const request = await fetch('https://api.todoist.com/rest/v1/tasks', {
       method: "POST",
@@ -145,7 +146,7 @@ class Tasks extends Component {
               />
               <EditOnClick customKey={task.id} value={task.content} />
             </div>
-            <div className='due' >
+            <div className='due' style={{fontSize: '14px'}} >
               {Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
             </div>
             <div style={{ clear: 'both', whiteSpace: 'wrap' }}>

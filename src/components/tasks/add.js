@@ -37,7 +37,7 @@ class AddTask extends Component {
       }}>
         <input className="addTaskInputBox"
           type="text"
-          style={{ width: '700px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }}
+          style={{ width: '500px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }}
           value={this.state.content}
           onChange={this.handleAddChange}
           onKeyDown={this.onEnterSave}
@@ -56,7 +56,7 @@ class AddTask extends Component {
           style={{ backgroundColor: '#c53727', color: 'white', borderRadius: '5px', marginLeft: '7px' }}
           onClick={(event) => {
             event.preventDefault();
-            this.props.onAddSubmit({ content: this.state.content, due_date: this.state.due_date });
+            this.props.onAddSubmit({ content: this.state.content, due_date: this.state.due_date || new Date() });
             this.setState({ content: '', due_date: '' })
           }}
         >Add task</Button>
@@ -70,17 +70,17 @@ class AddTask extends Component {
 
   originalAddUI = () => {
     return (
-      <>
+      <div style={{minHeight: '100px', display: 'flex', alignItems: 'center'}}>
         <Button type="link" className="addTaskButton" style={{ color: 'gray' }} onClick={this.toggleUI}>
           <Icon type="plus" style={{ color: 'red' }} />
           Add task
         </Button>
-      </>
+      </div>
     );
   }
 
   toggleUI = () => {
-    this.setState({ isAddUIOpen: !this.state.isAddUIOpen })
+    this.setState({ isAddUIOpen: !this.state.isAddUIOpen, content: '', due_date: '' })
     return;
   }
 
