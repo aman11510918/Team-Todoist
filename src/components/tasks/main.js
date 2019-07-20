@@ -14,7 +14,9 @@ class Tasks extends Component {
     super();
     this.state = {
       items: [],
-      key: ''
+      key: '',
+      isEditable: false,
+      editableTaskID: ''
     }
   }
 
@@ -132,6 +134,11 @@ class Tasks extends Component {
     }
   }
 
+  handleEditToggle = (props) => {
+    console.log(props);
+    this.setState({isEditable: props.isEditable, editableTaskID: props.editableTaskID}, () => {console.log('editable status:', this.state.isEditable, 'with id:', this.state.editableTaskID)})
+  }
+
   render() {
     return (
       <>
@@ -139,15 +146,15 @@ class Tasks extends Component {
           <li className="listOfTask" key={task.id}
             style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
             <div>
-              <input type="radio" className="checkbox"
+              { !(task.id === this.state.editableTaskID) && <input type="radio" className="checkbox"
                 onChange={() => this.handleCheckboxChange(task)}
                 defaultChecked={task.completed}
                 style={{marginRight: '10px'}}
-              />
-              <EditOnClick customKey={task.id} value={task.content} />
+              />}
+              <EditOnClick customKey={task.id} value={task.content} onEditClick={this.handleEditToggle}/>
             </div>
             <div className='due' style={{fontSize: '14px'}} >
-              {Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
+              {!(task.id === this.state.editableTaskID) && Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
             </div>
             <div style={{ clear: 'both', whiteSpace: 'wrap' }}>
               <Popover

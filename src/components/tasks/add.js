@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Icon, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
-import moment from 'moment';
+// import moment from 'moment';
 
 class AddTask extends Component {
   constructor(props) {
