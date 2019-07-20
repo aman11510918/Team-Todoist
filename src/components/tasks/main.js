@@ -145,7 +145,7 @@ class Tasks extends Component {
               />
               <EditOnClick customKey={task.id} value={task.content} />
             </div>
-            <div className='due' style={{ float: 'right' }}>
+            <div className='due' >
               {Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
             </div>
             <div style={{ clear: 'both', whiteSpace: 'wrap' }}>
