@@ -16,12 +16,12 @@ class EditOnClick extends Component {
   }
 
   handleEditSave = () => {
-    console.log('edited value:', this.refs.newEditedTask.value)
+    // console.log('edited value:', this.refs.newEditedTask.value)
     this.setState({
       isEditable: false,
       value: this.refs.newEditedTask.value
     }, () => {
-      console.log('val in child:', this.state.value);
+      // console.log('val in child:', this.state.value);
       const newTaskContent = { content: this.state.value };
       fetch(`https://api.todoist.com/rest/v1/tasks/${this.props.customKey}`, {
         method: "POST",
@@ -32,7 +32,7 @@ class EditOnClick extends Component {
         }
       })
         .then((request) => {
-          console.log('successfully updated in server')
+          // console.log('successfully updated in server')
         })
     });
   }

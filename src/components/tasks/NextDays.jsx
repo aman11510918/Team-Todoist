@@ -6,7 +6,7 @@ import moment from "moment";
 const { confirm } = Modal;
 
 // const aman = "78fcfd26adb47157e35612abb3649bdf71cc1400";
-const ram = '93b6caac34a82a2e2d8f1d57d9f5143516e2721c';
+const ram = '1af2e951c667fdb4790f2a868eb63644ab95421c';
 
 class TodayTasks extends Component {
 
@@ -102,7 +102,7 @@ class TodayTasks extends Component {
 
     newData.content && this.setState({
       items: items,
-    }, () => console.log('after adding new task, all tasks are:', this.state.items));
+    });
   }
 
   handleCheckboxChange = (props) => {
@@ -117,8 +117,6 @@ class TodayTasks extends Component {
         headers: {
           Authorization: `Bearer ${ram}`
         }
-      }).then(() => {
-        console.log('remaining active tasks:', this.state.items);
       })
     });
 
@@ -141,8 +139,7 @@ class TodayTasks extends Component {
   }
 
   handleEditToggle = (props) => {
-    console.log(props);
-    this.setState({isEditable: props.isEditable, editableTaskID: props.editableTaskID}, () => {console.log('editable status:', this.state.isEditable, 'with id:', this.state.editableTaskID)})
+    this.setState({isEditable: props.isEditable, editableTaskID: props.editableTaskID})
   }
 
   render() {
@@ -154,7 +151,7 @@ class TodayTasks extends Component {
     return (
       <>
         {tasksWithDueDatesLessThanSevenDays.map(task =>
-        <div className = 'displayList'>
+        <div className = 'displayList' key={task.id}>
           <li className="listOfTask" key={task.id}
             style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
             <div>

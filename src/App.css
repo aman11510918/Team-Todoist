@@ -27,6 +27,10 @@
   height: 48em;
 }
 
+.ant-layout-content{
+  min-height: none;
+}
+
 .ant-menu,
 .ant-menu-light,
 .ant-menu-root,
