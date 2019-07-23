@@ -115,7 +115,7 @@ const { confirm } = Modal;
         completedTasks.push(completedItem);
     
         this.setState({
-          items
+            items: items, completedTasks: completedTasks
         }, () => {
           fetch(`https://api.todoist.com/rest/v1/tasks/${props.id}/close`, {
             method: 'POST',

@@ -5,7 +5,6 @@ import { Popover, Modal, Button, Icon, Radio } from 'antd';
 import moment from "moment";
 const { confirm } = Modal;
 
-// const aman = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 const ram = '1af2e951c667fdb4790f2a868eb63644ab95421c';
 
 class TodayTasks extends Component {
@@ -115,7 +114,7 @@ class TodayTasks extends Component {
     completedTasks.push(completedItem);
 
     this.setState({
-      items
+      items: items, completedTasks: completedTasks
     }, () => {
       fetch(`https://api.todoist.com/rest/v1/tasks/${props.id}/close`, {
         method: 'POST',
