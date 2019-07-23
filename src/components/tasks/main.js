@@ -151,15 +151,19 @@ class Tasks extends Component {
   }
   
   showCompletedTasks = () => {
-    return <div>
-      <li style={{listStyle:'none'}}>
-              <span>
-              {this.state.completedTasks.map(result => 
-          <p>{result.content}</p>)}
-          </span>
-      </li>
-      
-    </div>
+    return (
+      this.state.completedTasks.map(completedTask => {
+          return <div style={{marginRight:'50px'}}>
+              <li style={{listStyle: 'none', display: 'flex', alignItems: 'center', borderBottom: '1px solid #e8e8e8', paddingTop: '10px', paddingBottom: '10px'}}>
+             <Icon type="check-circle" theme="filled" style={{color:'green'}}/>
+                  <span style={{marginLeft: '10px'}}>{completedTask.content}</span>
+              </li>
+
+
+
+          </div>
+        })
+    )
   }
 
   render() {

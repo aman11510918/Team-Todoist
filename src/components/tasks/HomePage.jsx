@@ -11,25 +11,18 @@ const { Header, Content } = Layout;
 const { Panel } = Collapse;
 
 export default class HomePage extends Component {
-
-  genExtra = () => (
-    <Icon type="plus"
-      onClick={event => {
-        event.stopPropagation();
-      }}
-    />
-  );
+ 
   render() {
 
     return (
       <Router>
         <div>
-          <Layout>
+          <Layout style={{ minHeight: 'min-content'}}>
             <Header className="header" style={{ zIndex:'3', width: '100%', background: '#db4c3f', height: '44px', position: 'fixed' }}>
               <Link to="/"><img src={logo} alt="Todoist Logo" className="logo" /></Link>
             </Header>
-            <Content style={{ padding: '0 0 0 15px', background: '#fafafa' }}>
-              <div style={{ width: '299px', margin: '90px 0px 0px 124px', position: 'fixed' }}>
+            <Content style={{ padding: '0 0 0 15px', background: '#fafafa'}}>
+              <div style={{ width: '299px', margin: '90px 0px 0px 124px', position: 'fixed'}}>
                 <Menu
                   mode="inline"
                   style={{ height: '100%', background: '#fafafa' }}>
@@ -58,7 +51,7 @@ export default class HomePage extends Component {
                     </Link>
                   </Menu.Item>
                   <Collapse bordered={false} style={{ backgroundColor: '#fafafa' }}>
-                    <Panel header="Projects" key="1" extra={this.genExtra()}>
+                    <Panel header="Projects" key="1" >
                       {
                         
                         <ProjectContent />
@@ -79,7 +72,7 @@ export default class HomePage extends Component {
                   borderRight: '1px solid #e8e8e8',
                   borderLeft: '1px solid #e8e8e8'
                 }}>
-                <div style={{ padding: '45px 0px 0px 45px' }}>
+                <div style={{ padding: '45px 0px 0px 45px', minHeight: '45.5em' }}>
                   <RoutesFilter />
                 </div>
               </Content>
