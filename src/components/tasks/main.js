@@ -7,8 +7,6 @@ import { Popover, Modal, Button, Icon, Radio } from 'antd';
 const { confirm } = Modal;
 
 const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
-// const token = '6353a697208d207658daa816471b1da86cbc2c96';
-// const token = '1af2e951c667fdb4790f2a868eb63644ab95421c';
 
 class Tasks extends Component {
 
