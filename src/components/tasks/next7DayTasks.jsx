@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import AddTask from './add'
-import EditOnClick from './edit'
-import { Popover, Modal, Button, Icon, Radio } from 'antd';
 import moment from "moment";
-const { confirm } = Modal;
+import AddTask from './addTask';
+import EditOnClick from './editTask';
+import React, { Component } from 'react';
+import { Popover, Modal, Button, Icon, Radio } from 'antd';
 
-// const aman = "78fcfd26adb47157e35612abb3649bdf71cc1400";
-const ram = '93b6caac34a82a2e2d8f1d57d9f5143516e2721c';
+const { confirm } = Modal;
+const ram = '1af2e951c667fdb4790f2a868eb63644ab95421c';
 
 class TodayTasks extends Component {
 
@@ -16,7 +15,9 @@ class TodayTasks extends Component {
       items: [],
       key: '',
       isEditable: false,
-      editableTaskID: ''
+      editableTaskID: '',
+      completedTasks: [],
+      showCompleted: false,
     }
   }
 
@@ -102,23 +103,24 @@ class TodayTasks extends Component {
 
     newData.content && this.setState({
       items: items,
-    }, () => console.log('after adding new task, all tasks are:', this.state.items));
+    });
   }
 
   handleCheckboxChange = (props) => {
 
     const items = this.state.items.filter(item => item.id !== props.id);
+    const completedItem = this.state.items.filter(item => item.id === props.id)[0];
+    const completedTasks = this.state.completedTasks.slice();
+    completedTasks.push(completedItem);
 
     this.setState({
-      items
+      items: items, completedTasks: completedTasks
     }, () => {
       fetch(`https://api.todoist.com/rest/v1/tasks/${props.id}/close`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${ram}`
         }
-      }).then(() => {
-        console.log('remaining active tasks:', this.state.items);
       })
     });
 
@@ -141,10 +143,26 @@ class TodayTasks extends Component {
   }
 
   handleEditToggle = (props) => {
-    console.log(props);
-    this.setState({isEditable: props.isEditable, editableTaskID: props.editableTaskID}, () => {console.log('editable status:', this.state.isEditable, 'with id:', this.state.editableTaskID)})
+    this.setState({isEditable: props.isEditable, editableTaskID: props.editableTaskID})
   }
 
+  handleCompleteTask = () => {
+   
+    this.setState({showCompleted: !this.state.showCompleted});
+  }
+  
+  showCompletedTasks = () => {
+    return (
+      this.state.completedTasks.map(completedTask => {
+          return <div style={{marginRight:'50px'}}>
+              <li style={{listStyle: 'none', display: 'flex', alignItems: 'center', borderBottom: '1px solid #e8e8e8', paddingTop: '10px', paddingBottom: '10px'}}>
+             <Icon type="check-circle" theme="filled" style={{color:'green'}}/>
+                  <span style={{marginLeft: '10px'}}>{completedTask.content}</span>
+              </li>
+          </div>
+        })
+    )
+  }
   render() {
     const tasksWithDueDatesLessThanSevenDays =
       this.state.items.filter(value => {
@@ -153,8 +171,12 @@ class TodayTasks extends Component {
       });
     return (
       <>
+      <h1>
+        Next 7 Days
+        <Button type="link" onClick={() => this.handleCompleteTask()}><Icon type="check-circle" />Show Completed Task</Button>
+      </h1>
         {tasksWithDueDatesLessThanSevenDays.map(task =>
-        <div className = 'displayList'>
+        <div className = 'displayList' key={task.id}>
           <li className="listOfTask" key={task.id}
             style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
             <div>
@@ -188,6 +210,7 @@ class TodayTasks extends Component {
           </div>
         )}
         <AddTask onAddSubmit={this.handleAddTask} />
+        {this.state.showCompleted ? this.showCompletedTasks() : null }
       </>
     );
   }

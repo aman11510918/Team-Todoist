@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'antd';
 import 'antd/dist/antd.css';
 
-const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
+const token = "1af2e951c667fdb4790f2a868eb63644ab95421c";
 
 class EditOnClick extends Component {
 
@@ -16,12 +16,12 @@ class EditOnClick extends Component {
   }
 
   handleEditSave = () => {
-    console.log('edited value:', this.refs.newEditedTask.value)
+    // console.log('edited value:', this.refs.newEditedTask.value)
     this.setState({
       isEditable: false,
       value: this.refs.newEditedTask.value
     }, () => {
-      console.log('val in child:', this.state.value);
+      // console.log('val in child:', this.state.value);
       const newTaskContent = { content: this.state.value };
       fetch(`https://api.todoist.com/rest/v1/tasks/${this.props.customKey}`, {
         method: "POST",
@@ -32,7 +32,7 @@ class EditOnClick extends Component {
         }
       })
         .then((request) => {
-          console.log('successfully updated in server')
+          // console.log('successfully updated in server')
         })
     });
   }

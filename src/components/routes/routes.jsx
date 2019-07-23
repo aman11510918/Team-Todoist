@@ -1,8 +1,9 @@
+import Tasks from '../tasks/main';
 import React, { Component } from 'react';
-import NextDays from '../components/tasks/NextDays';
-import Tasks from './tasks/main'
+import TodayTasks from '../tasks/todayTasks';
+import NextDays from '../tasks/next7DayTasks';
 import {Switch, Route} from 'react-router-dom';
-import TodayTasks from './tasks/TodayTasks';
+import ProjectDetail from '../projects/projectDetail';
 
 class RoutesFilter extends Component {
     constructor(props) {
@@ -17,6 +18,8 @@ class RoutesFilter extends Component {
                     <Route path={"/"} exact component={Tasks}/>
                     <Route path={"/today"} component={TodayTasks}/>
                     <Route path={"/nextdays"} component={NextDays} />
+                    <Route path={"/project/:id"} component={ProjectDetail} />
+
                     </Switch>
 
                 </div>

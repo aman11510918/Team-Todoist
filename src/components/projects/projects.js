@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
 
-class SomeStuff extends Component {
+export default class Projects extends Component {
 
   constructor() {
     super();
@@ -111,5 +111,3 @@ class SomeStuff extends Component {
     );
   }
 }
-
-export default SomeStuff;

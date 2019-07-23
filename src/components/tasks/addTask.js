@@ -25,7 +25,7 @@ class AddTask extends Component {
 
   handleSelect = (event) => {
     this.setState({due_date: event._d})
-    console.log(this.state.due_date);
+    // console.log(this.state.due_date);
   }
 
   addTaskUI = () => {
