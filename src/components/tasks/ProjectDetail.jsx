@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AddTask from './add'
-import EditOnClick from './edit'
+import EditProjectDetails from './editProjectDetails'
 import { Popover, Modal, Button, Icon, Radio } from 'antd';
 import moment from 'moment'
 
@@ -16,7 +16,9 @@ const { confirm } = Modal;
             items: [],
             key: '',
             isEditable: false,
-            editableTaskID: ''
+            editableTaskID: '',
+            completedTasks: [],
+            showCompleted: false,
          }
      }
      componentDidMount() {
@@ -78,11 +80,12 @@ const { confirm } = Modal;
       }
     
       handleAddTask = async (newData) => {
-    
+   
         let task = {
           content: newData.content,
-          due_date: new Date(newData.due_date).toISOString().split('T')[0]
-        }
+          due_date: new Date(newData.due_date).toISOString().split('T')[0],
+          project_id: parseInt(this.props.match.params.id, 10)
+        }    
     
         if (!newData.content) return;
     
@@ -107,6 +110,9 @@ const { confirm } = Modal;
       handleCheckboxChange = (props) => {
     
         const items = this.state.items.filter(item => item.id !== props.id);
+        const completedItem = this.state.items.filter(item => item.id === props.id)[0];
+        const completedTasks = this.state.completedTasks.slice();
+        completedTasks.push(completedItem);
     
         this.setState({
           items
@@ -127,9 +133,6 @@ const { confirm } = Modal;
         return (tempDate.getFullYear() + '-' + (month < 10 ? '0' + month : '' + month) + '-' + tempDate.getDate());
       }
     
-      /**
-       * @return if item has a due date or not
-       */
       handleDueDate = (item) => {
         return (
           Object.prototype.hasOwnProperty.call(item, 'due') ? Date.parse(item.due.date) : ""
@@ -150,11 +153,32 @@ const { confirm } = Modal;
         this.setState({isEditable: props.isEditable, editableTaskID: props.editableTaskID})
       }
 
+      handleCompleteTask = () => {
+   
+        this.setState({showCompleted: !this.state.showCompleted});
+      }
+      
+      showCompletedTasks = () => {
+        return <div>
+          <li style={{listStyle:'none'}}>
+                  <span>
+                  {this.state.completedTasks.map(result => 
+              <p>{result.content}</p>)}
+              </span>
+          </li>
+          
+        </div>
+      }
+
      render() { 
          const id = this.props.match.params.id;
          const projectTask = this.state.items.filter(val => val.project_id ===  Number(id))
          return (  
              <>
+             <h1>
+                {this.props.location.state.projectName}
+        <Button type="link" onClick={() => this.handleCompleteTask()}><Icon type="check-circle" />Show Completed Task</Button>
+      </h1>
              { projectTask.map(task =>  <div className = 'displayList' key={task.id}>
           <li className="listOfTask" key={task.id}
             style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
@@ -164,7 +188,7 @@ const { confirm } = Modal;
                 defaultChecked={task.completed}
                 style={{marginRight: '10px'}}
               />}
-              <EditOnClick customKey={task.id} value={task.content} onEditClick={this.handleEditToggle}/>
+              <EditProjectDetails customKey={task.id} value={task.content} projectId={task.project_id} onEditClick={this.handleEditToggle}/>
             </div>
             <div className='due' style={{fontSize: '10px'}} >
               {!(task.id === this.state.editableTaskID) && Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
@@ -189,6 +213,7 @@ const { confirm } = Modal;
             </div>
         )}
         <AddTask onAddSubmit={this.handleAddTask} />
+        {this.state.showCompleted ? this.showCompletedTasks() : null }
       </>
     );
   }

@@ -4,7 +4,7 @@ import { Popover, Button, Icon, Modal } from 'antd';
 import { Link } from 'react-router-dom'
 
 const { confirm } = Modal;
-const token = "1af2e951c667fdb4790f2a868eb63644ab95421c";
+const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 
 class ProjectContent extends Component {
 	constructor(props) {
@@ -58,13 +58,14 @@ class ProjectContent extends Component {
 	}
 	handleDelete = async (projectId) => {
 		let array = [...this.state.projects];
-		await fetch(`https://api.todoist.com/rest/v1/projects/${projectId}`, {
-			method: 'DELETE',
+		const url = `https://api.todoist.com/rest/v1/projects/${projectId}`;
+		await fetch(url, {
+			method: "DELETE",
 			headers: {
-
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${token}`
 			}
-		}).catch(err => console.log(err))
+		})
+
 		let newDeleted = array.filter(data => data.id !== projectId);
 		this.setState({ projects: newDeleted })
 	}
@@ -90,9 +91,11 @@ class ProjectContent extends Component {
 		return (
 			<>
 				{result.map(value =>
+				
 					
 					<li key={value.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-						<Link to={`/project/${value.id}`}><div key={value.id}>
+						<Link to={ { pathname: `/project/${value.id}`, state: { projectName: value.name } } }>
+							<div key={value.id}>
 							{value.name}
 						</div></Link>
 						<div style={{ clear: 'both', whiteSpace: 'wrap' }}>

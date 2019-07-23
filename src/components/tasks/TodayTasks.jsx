@@ -17,7 +17,9 @@ class TodayTasks extends Component {
       items: [],
       key: '',
       isEditable: false,
-      editableTaskID: ''
+      editableTaskID: '',
+      completedTasks: [],
+      showCompleted: false,
     }
   }
 
@@ -108,6 +110,9 @@ class TodayTasks extends Component {
   handleCheckboxChange = (props) => {
 
     const items = this.state.items.filter(item => item.id !== props.id);
+    const completedItem = this.state.items.filter(item => item.id === props.id)[0];
+    const completedTasks = this.state.completedTasks.slice();
+    completedTasks.push(completedItem);
 
     this.setState({
       items
@@ -150,11 +155,32 @@ class TodayTasks extends Component {
   handleEditToggle = (props) => {
     this.setState({isEditable: props.isEditable, editableTaskID: props.editableTaskID})
   }
+  handleCompleteTask = () => {
+   
+    this.setState({showCompleted: !this.state.showCompleted});
+  }
+  
+  showCompletedTasks = () => {
+    return <div>
+      <li style={{listStyle:'none'}}>
+              <span>
+              {this.state.completedTasks.map(result => 
+          <p>{result.content}</p>)}
+          </span>
+      </li>
+      
+    </div>
+  }
+
 
   render() {
     const tasksWithDueDate = this.state.items.filter(item => this.handleDueDate(item) === Date.parse(this.currDate()));
     return (
       <>
+      <h1>
+        Today
+        <Button type="link" onClick={() => this.handleCompleteTask()}><Icon type="check-circle" />Show Completed Task</Button>
+      </h1>
         {tasksWithDueDate.map(task =>
         <div className = 'displayList' key={task.id}>
           <li className="listOfTask" key={task.id}
@@ -190,6 +216,7 @@ class TodayTasks extends Component {
             </div>
         )}
         <AddTask onAddSubmit={this.handleAddTask} />
+        {this.state.showCompleted ? this.showCompletedTasks() : null }
       </>
     );
   }
