@@ -51,7 +51,7 @@ class AddProject extends Component {
 
   originalProjectUI = () => {
     return (
-      <div style={{minHeight: '120px', display: 'flex', alignItems: 'start'}}>
+      <div style={{minHeight: 'fit-content', display: 'flex', alignItems: 'start'}}>
         <Button type="link" className="addTaskButton" style={{ color: 'gray' }} onClick={this.toggleUI}>
           <Icon type="plus" style={{ color: 'red' }} />
           Add Project
