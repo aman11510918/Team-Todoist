@@ -1,0 +1,76 @@
+const express = require('express');
+const app = express();
+const router = express.Router();
+const fetch = require('node-fetch');
+var theCode = '';
+var theToken = '';
+const Cookies = require('js-cookie');
+
+router.get('/todoist', (req, res) => {
+    const csrfState = Math.random().toString(36).substring(7);
+    res.cookie('csrfState', csrfState, { maxAge: 60000 });
+    const query = {
+        scope: 'read:user',
+        client_id: 'aa986aa6a3a745e49018a902309499a3',
+        state: csrfState,
+    };
+    res.redirect(`https://todoist.com/oauth/authorize?client_id=${query.client_id}&scope=task:add,data:read_write,data:read,data:delete&state=${csrfState}`);
+    // ,project:delete  {NOT WORKING}
+});
+
+router.get('/todoist/redirect', (req, res) => { 
+    theCode = req.query.code;
+    console.log('the code: ' + theCode);
+    if (req.query.error){
+        res.redirect('http://localhost:3000')
+    }
+    const query = {
+        client_id: 'aa986aa6a3a745e49018a902309499a3',
+        client_secret: 'd86aa3ff09cb43eebdf1228a174898c7',
+        code: theCode,
+        redirect_uri: 'http://localhost:3000'
+    };
+
+    let url = `https://todoist.com/oauth/access_token?client_id=${query.client_id}&client_secret=${query.client_secret}&code=${query.code}&redirect_uri=${query.redirect_uri}`;
+    fetch(url, {
+        method:'POST'
+    }).then(data => {
+        let d = data.json();
+        console.log(d);
+        return d;
+    })
+    .then(data =>  data.access_token)
+    .then(data => {
+        theToken = data;
+        // Cookies.remove('theToken');
+        res.cookie('theToken', theToken);
+        console.log('the token: ' + theToken);
+    })
+    .then(() => res.redirect('http://localhost:3000/'))    
+});
+
+router.get('/logout', (req, res) => {
+    console.log(req.query);
+    
+    const query = {
+        client_id: 'aa986aa6a3a745e49018a902309499a3',
+        client_secret: 'd86aa3ff09cb43eebdf1228a174898c7',
+        access_token: req.query.access_token
+    };
+
+    console.log(query);
+    let url = `https://api.todoist.com/sync/v8/access_tokens/revoke`;
+
+    fetch(url, {
+        method:'POST',
+        body: JSON.stringify(query),   
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then( () => {
+        res.redirect('http://localhost:3000/');
+    })
+});
+
+module.exports = router;    

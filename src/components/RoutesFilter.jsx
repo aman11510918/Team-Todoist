@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NextDays from '../components/tasks/NextDays';
 import Tasks from './tasks/main'
 import {Switch, Route} from 'react-router-dom';
-import TodayTasks from '/home/guest/programs/mb_training/Team-Todoist/src/components/tasks/TodayTasks.jsx'
+import TodayTasks from './tasks/TodayTasks';
 
 class RoutesFilter extends Component {
     constructor(props) {
