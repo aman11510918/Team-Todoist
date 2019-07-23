@@ -37,7 +37,7 @@ class AddTask extends Component {
       }}>
         <input className="addTaskInputBox"
           type="text"
-          style={{ width: '500px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }}
+          style={{ width: '440px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }}
           value={this.state.content}
           onChange={this.handleAddChange}
           onKeyDown={this.onEnterSave}
