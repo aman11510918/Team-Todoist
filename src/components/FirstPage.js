@@ -51,7 +51,6 @@ export default class FirstPage extends Component {
         return (
             <>  
                 {WithoutLogin}
-            
             </>
         );
     }

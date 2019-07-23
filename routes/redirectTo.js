@@ -58,7 +58,7 @@ router.get('/logout', (req, res) => {
         client_secret: 'd86aa3ff09cb43eebdf1228a174898c7',
         access_token: req.query.access_token
     };
-
+            
     console.log(query);
     let url = `https://api.todoist.com/sync/v8/access_tokens/revoke`;
 
