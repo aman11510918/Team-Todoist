@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AddTask from './add'
 import EditOnClick from './edit'
 import moment from 'moment'
-import { Popover, Modal, Button, Icon, Radio, Tooltip } from 'antd';
+import { Popover, Modal, Button, Icon, Radio } from 'antd';
 
 const { confirm } = Modal;
 
@@ -145,8 +145,8 @@ class Tasks extends Component {
     return (
       <>
         {this.state.items.map(task =>
-        <div className = 'displayList'>
-          <li className="listOfTask" key={task.id}
+        <div className = 'displayList' key={task.id}> 
+          <li className="listOfTask"
             style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
             <div>
               { !(task.id === this.state.editableTaskID) && <Radio size='large'
