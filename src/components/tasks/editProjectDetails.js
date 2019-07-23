@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 
 const token = "1af2e951c667fdb4790f2a868eb63644ab95421c";
 
-class EditOnClick extends Component {
+class EditProjectDetails extends Component {
 
   constructor(props) {
     super(props);
@@ -22,7 +22,10 @@ class EditOnClick extends Component {
       value: this.refs.newEditedTask.value
     }, () => {
       // console.log('val in child:', this.state.value);
-      const newTaskContent = { content: this.state.value };
+      const newTaskContent = { 
+        content: this.state.value,
+        project_id: this.props.projectId
+      };
       fetch(`https://api.todoist.com/rest/v1/tasks/${this.props.customKey}`, {
         method: "POST",
         body: JSON.stringify(newTaskContent),
@@ -67,4 +70,4 @@ class EditOnClick extends Component {
   }
 }
 
-export default EditOnClick;
+export default EditProjectDetails;
