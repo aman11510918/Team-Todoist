@@ -41,7 +41,7 @@ export default class HomePage extends Component {
               <Button type="link" className="log-out-button" onClick={this.doLogout} >Log Out</Button>
             </Header>
             <Content style={{ padding: '0 0 0 15px', background: '#fafafa'}}>
-              <div style={{ width: '299px', margin: '90px 0px 0px 124px', position: 'fixed'}}>
+              <div style={{ width: '299px', margin: '45px 0px 0px 0px', position: 'fixed'}}>
                 <Menu
                   mode="inline"
                   style={{ height: '100%', background: '#fafafa' }}>
