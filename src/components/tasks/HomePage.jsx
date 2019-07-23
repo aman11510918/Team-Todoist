@@ -20,7 +20,7 @@ export default class HomePage extends Component {
     Cookies.remove('theToken');
     console.log('Logged out(react)'); 
     console.log('cookie is:', Cookies.get('theToken'));
-    window.location =`http://localhost:4000/auth/logout?access_token=${token}`;
+    window.location =`/auth/logout?access_token=${token}`;
     
   }
 

@@ -6,6 +6,7 @@ var theCode = '';
 var theToken = '';
 const Cookies = require('js-cookie');
 
+
 router.get('/todoist', (req, res) => {
     const csrfState = Math.random().toString(36).substring(7);
     res.cookie('csrfState', csrfState, { maxAge: 60000 });
@@ -22,13 +23,13 @@ router.get('/todoist/redirect', (req, res) => {
     theCode = req.query.code;
     console.log('the code: ' + theCode);
     if (req.query.error){
-        res.redirect('http://localhost:3000')
+        res.redirect('/')
     }
     const query = {
         client_id: 'aa986aa6a3a745e49018a902309499a3',
         client_secret: 'd86aa3ff09cb43eebdf1228a174898c7',
         code: theCode,
-        redirect_uri: 'http://localhost:3000'
+        redirect_uri: '/'
     };
 
     let url = `https://todoist.com/oauth/access_token?client_id=${query.client_id}&client_secret=${query.client_secret}&code=${query.code}&redirect_uri=${query.redirect_uri}`;
@@ -46,7 +47,7 @@ router.get('/todoist/redirect', (req, res) => {
         res.cookie('theToken', theToken);
         console.log('the token: ' + theToken);
     })
-    .then(() => res.redirect('http://localhost:3000/'))    
+    .then(() => res.redirect('/'))    
 });
 
 router.get('/logout', (req, res) => {
@@ -69,7 +70,7 @@ router.get('/logout', (req, res) => {
         }
     })
     .then( () => {
-        res.redirect('http://localhost:3000/');
+        res.redirect('/');
     })
 });
 
