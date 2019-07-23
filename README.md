@@ -4,6 +4,10 @@ We have created a clone of todoist.com, wherein a user can manage his tasks very
 
 ## Available Scripts
 
+### Things to do before testing
+
+Run `npm install` to install all the dependencies. This should be done as soon as you clone our repository.
+
 In the project directory, you can run:
 
 ### `npm run build`
