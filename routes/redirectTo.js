@@ -1,18 +1,19 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
+
 const router = express.Router();
 const fetch = require('node-fetch');
 var theCode = '';
 var theToken = '';
 const Cookies = require('js-cookie');
 
-
 router.get('/todoist', (req, res) => {
     const csrfState = Math.random().toString(36).substring(7);
     res.cookie('csrfState', csrfState, { maxAge: 60000 });
     const query = {
         scope: 'read:user',
-        client_id: 'aa986aa6a3a745e49018a902309499a3',
+        client_id:  process.env.CLIENT_ID,
         state: csrfState,
     };
     res.redirect(`https://todoist.com/oauth/authorize?client_id=${query.client_id}&scope=task:add,data:read_write,data:read,data:delete&state=${csrfState}`);
@@ -26,8 +27,8 @@ router.get('/todoist/redirect', (req, res) => {
         res.redirect('/')
     }
     const query = {
-        client_id: 'aa986aa6a3a745e49018a902309499a3',
-        client_secret: 'd86aa3ff09cb43eebdf1228a174898c7',
+        client_id:  process.env.CLIENT_ID,
+        client_secret:  process.env.CLIENT_SECRET,
         code: theCode,
         redirect_uri: '/'
     };
@@ -54,8 +55,8 @@ router.get('/logout', (req, res) => {
     console.log(req.query);
     
     const query = {
-        client_id: 'aa986aa6a3a745e49018a902309499a3',
-        client_secret: 'd86aa3ff09cb43eebdf1228a174898c7',
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET,
         access_token: req.query.access_token
     };
 
