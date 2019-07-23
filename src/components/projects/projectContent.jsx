@@ -86,6 +86,12 @@ class ProjectContent extends Component {
 		});
 	}
 
+	handleEditOnClick = (event) => {
+		console.log(event);
+
+		
+	}
+
 	render() {
 		const result = this.state.projects.filter(project => project.name !== "Inbox")
 		return (
@@ -105,7 +111,7 @@ class ProjectContent extends Component {
 								trigger="focus"
 								content={
 									<div>
-										<Button type="link" style={{ color: '#333333' }}><Icon type='edit' style={{ color: 'gray' }} />Edit Task</Button>
+										<Button type="link" style={{ color: '#333333' }} onClick={() => {this.handleEditOnClick}}><Icon type='edit' style={{ color: 'gray' }} />Edit Task</Button>
 										<br />
 										<Button type='link' style={{ color: '#333333' }} onClick={() => this.showDeleteConfirm(value)}><Icon type='delete' style={{ color: 'red' }} />Delete Task</Button>
 									</div>
