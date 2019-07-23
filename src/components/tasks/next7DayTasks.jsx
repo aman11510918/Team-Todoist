@@ -5,7 +5,9 @@ import React, { Component } from 'react';
 import { Popover, Modal, Button, Icon, Radio } from 'antd';
 
 const { confirm } = Modal;
-const ram = '1af2e951c667fdb4790f2a868eb63644ab95421c';
+
+const Cookies = require('js-cookie');
+const token = Cookies.get('theToken');
 
 class TodayTasks extends Component {
 
@@ -32,7 +34,7 @@ class TodayTasks extends Component {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': "Bearer " + ram,
+          'Authorization': "Bearer " + token,
         },
 
       });
@@ -56,7 +58,7 @@ class TodayTasks extends Component {
     await fetch(`https://api.todoist.com/rest/v1/tasks/${id}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': "Bearer " + ram,
+        'Authorization': "Bearer " + token,
       },
     });
     let newDeleted = array.filter(data => data.id !== id);
@@ -93,7 +95,7 @@ class TodayTasks extends Component {
       body: JSON.stringify(task),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${ram}`
+        Authorization: `Bearer ${token}`
       }
     });
     const response = await request.json();
@@ -119,7 +121,7 @@ class TodayTasks extends Component {
       fetch(`https://api.todoist.com/rest/v1/tasks/${props.id}/close`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${ram}`
+          Authorization: `Bearer ${token}`
         }
       })
     });

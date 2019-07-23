@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
+const Cookies = require('js-cookie');
+
+// const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
+const token = Cookies.get('theToken');
 
 export default class Projects extends Component {
 

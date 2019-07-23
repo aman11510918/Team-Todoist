@@ -1,25 +1,44 @@
 import './App.css';
 import 'antd/dist/antd.css';
+
 import React, { Component } from 'react';
-import RoutesFilter from './components/routes/routes';
-import ProjectContent from './components/projects/projectContent';
 import logo from './logo/Todolist-home.jpg';
-import { Collapse, Layout, Menu, Icon} from 'antd';
+import RoutesFilter from './components/routes/routes';
+import { Collapse, Layout, Menu, Icon, Button } from 'antd';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
+import ProjectContent from './components/projects/projectContent';
+
+const Cookies = require('js-cookie');
 
 const { Header, Content } = Layout;
 const { Panel } = Collapse;
 
 export default class HomePage extends Component {
- 
-  render() {
 
+  doLogout=(e)=>{
+    let token = Cookies.get('theToken');
+    Cookies.remove('theToken');
+    console.log('Logged out(react)'); 
+    console.log('cookie is:', Cookies.get('theToken'));
+    window.location =`/auth/logout?access_token=${token}`;
+  }
+
+  genExtra = () => (
+    <Icon type="plus"
+      onClick={event => {
+        event.stopPropagation();
+      }}
+    />
+  );
+
+  render() {
     return (
       <Router>
         <div>
           <Layout style={{ minHeight: 'min-content'}}>
             <Header className="header" style={{ zIndex:'3', width: '100%', background: '#db4c3f', height: '44px', position: 'fixed' }}>
               <Link to="/"><img src={logo} alt="Todoist Logo" className="logo" /></Link>
+              <Button type="link" className="log-out-button" onClick={this.doLogout} >Log Out</Button>
             </Header>
             <Content style={{ padding: '0 0 0 15px', background: '#fafafa'}}>
               <div style={{ width: '299px', margin: '90px 0px 0px 124px', position: 'fixed'}}>
