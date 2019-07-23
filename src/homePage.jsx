@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import '../../App.css'
+import './App.css';
 import 'antd/dist/antd.css';
-import logo from '../../logo/Todolist-home.jpg';
-import RoutesFilter from '../RoutesFilter'
+import React, { Component } from 'react';
+import RoutesFilter from './components/routes/routes';
+import ProjectContent from './components/projects/projectContent';
+import logo from './logo/Todolist-home.jpg';
 import { Collapse, Layout, Menu, Icon} from 'antd';
- import ProjectContent from '../ProjectContent';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 const { Header, Content } = Layout;
 const { Panel } = Collapse;

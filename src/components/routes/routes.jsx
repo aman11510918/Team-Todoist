@@ -1,9 +1,10 @@
+import Tasks from '../tasks/main';
 import React, { Component } from 'react';
-import NextDays from '../components/tasks/NextDays';
-import Tasks from './tasks/main'
+import TodayTasks from '../tasks/todayTasks';
+import NextDays from '../tasks/next7DayTasks';
 import {Switch, Route} from 'react-router-dom';
-import TodayTasks from './tasks/TodayTasks'
-import ProjectDetail from './tasks/ProjectDetail'
+import ProjectDetail from '../projects/projectDetail';
+
 class RoutesFilter extends Component {
     constructor(props) {
         super(props);

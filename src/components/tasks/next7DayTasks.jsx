@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import AddTask from './add'
-import EditOnClick from './edit'
-import { Popover, Modal, Button, Icon, Radio } from 'antd';
 import moment from "moment";
-const { confirm } = Modal;
+import AddTask from './addTask';
+import EditOnClick from './editTask';
+import React, { Component } from 'react';
+import { Popover, Modal, Button, Icon, Radio } from 'antd';
 
+const { confirm } = Modal;
 const ram = '1af2e951c667fdb4790f2a868eb63644ab95421c';
 
 class TodayTasks extends Component {

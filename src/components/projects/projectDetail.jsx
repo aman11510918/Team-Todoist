@@ -1,12 +1,11 @@
+import moment from 'moment';
+import AddTask from '../tasks/addTask';
 import React, { Component } from 'react';
-import AddTask from './add'
-import EditProjectDetails from './editProjectDetails'
 import { Popover, Modal, Button, Icon, Radio } from 'antd';
-import moment from 'moment'
+import EditProjectDetails from '../projects/editProjectDetails';
 
 const { confirm } = Modal;
-
- const token = '1af2e951c667fdb4790f2a868eb63644ab95421c';
+const token = '1af2e951c667fdb4790f2a868eb63644ab95421c';
  
  class ProjectDetail extends Component {
      constructor(props) {

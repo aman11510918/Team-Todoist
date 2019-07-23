@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import AddTask from './add'
-import EditOnClick from './edit'
 import moment from 'moment'
+import AddTask from './addTask';
+import EditOnClick from './editTask';
+import React, { Component } from 'react';
 import { Popover, Modal, Button, Icon, Radio, Tooltip } from 'antd';
 
 const { confirm } = Modal;

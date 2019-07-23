@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Button } from 'antd';
 import 'antd/dist/antd.css';
+import { Button } from 'antd';
+import React, { Component } from 'react';
 
 const token = "1af2e951c667fdb4790f2a868eb63644ab95421c";
 

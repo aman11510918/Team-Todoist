@@ -1,7 +1,7 @@
+import AddProject from './addProjects';
+import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
-import AddProject from './tasks/addprojects';
 import { Popover, Button, Icon, Modal } from 'antd';
-import { Link } from 'react-router-dom'
 
 const { confirm } = Modal;
 const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
