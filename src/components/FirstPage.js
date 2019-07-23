@@ -9,9 +9,8 @@ export default class FirstPage extends Component {
     }
 
     render(){
-
         let WithoutLogin = (
-            <>
+            <>  
                 <div className="Top-Bar">
                     <div className="Todoist-Logo" />
                 
@@ -21,10 +20,10 @@ export default class FirstPage extends Component {
                             <li><a href="https://www.google.com"> Templates</a></li>
                             <li><a href="https://www.google.com"> Premium </a></li>
                             <li><a href="https://www.google.com"> Business </a></li>   
-                            {/* <li><a href="/auth/todoist">Log in</a></li>
-                            <li><a href="/auth/todoist">Sign up</a></li> */}
-                            <li><a href="http://localhost:4000/auth/todoist">Log in</a></li>
-                            <li><a href="http://localhost:4000/auth/todoist">Sign up</a></li>
+                            <li><a href="/auth/todoist">Log in</a></li>
+                            <li><a href="/auth/todoist">Sign up</a></li>
+                            {/* <li><a href="http://localhost:4000/auth/todoist">Log in</a></li>
+                            <li><a href="http://localhost:4000/auth/todoist">Sign up</a></li> */}
                         </ul>
                     </div>    
                 </div>
@@ -53,7 +52,6 @@ export default class FirstPage extends Component {
         return (
             <>  
                 {WithoutLogin}
-            
             </>
         );
     }

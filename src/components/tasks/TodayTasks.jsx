@@ -3,11 +3,11 @@ import AddTask from './add'
 import EditOnClick from './edit'
 import { Popover, Modal, Button, Icon, Radio } from 'antd';
 import moment from 'moment'
+const Cookies = require('js-cookie');
+
+const token = Cookies.get('theToken');
 
 const { confirm } = Modal;
-
-
-const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
 
 class TodayTasks extends Component {
 

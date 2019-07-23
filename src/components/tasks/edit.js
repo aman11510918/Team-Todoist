@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
 import 'antd/dist/antd.css';
+const Cookies = require('js-cookie')
 
-const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
+// const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c"
+const token = Cookies.get('theToken')
 
 class EditOnClick extends Component {
 

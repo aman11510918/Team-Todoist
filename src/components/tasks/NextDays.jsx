@@ -4,9 +4,11 @@ import EditOnClick from './edit'
 import { Popover, Modal, Button, Icon, Radio } from 'antd';
 import moment from "moment";
 const { confirm } = Modal;
+const Cookies = require('js-cookie');
 
 // const aman = "78fcfd26adb47157e35612abb3649bdf71cc1400";
-const ram = '93b6caac34a82a2e2d8f1d57d9f5143516e2721c';
+// const token = '93b6caac34a82a2e2d8f1d57d9f5143516e2721c';
+const token = Cookies.get('theToken');
 
 class TodayTasks extends Component {
 
@@ -31,7 +33,7 @@ class TodayTasks extends Component {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': "Bearer " + ram,
+          'Authorization': "Bearer " + token,
         },
 
       });
@@ -55,7 +57,7 @@ class TodayTasks extends Component {
     await fetch(`https://api.todoist.com/rest/v1/tasks/${id}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': "Bearer " + ram,
+        'Authorization': "Bearer " + token,
       },
     });
     let newDeleted = array.filter(data => data.id !== id);
@@ -92,7 +94,7 @@ class TodayTasks extends Component {
       body: JSON.stringify(task),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${ram}`
+        Authorization: `Bearer ${token}`
       }
     });
     const response = await request.json();
@@ -115,7 +117,7 @@ class TodayTasks extends Component {
       fetch(`https://api.todoist.com/rest/v1/tasks/${props.id}/close`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${ram}`
+          Authorization: `Bearer ${token}`
         }
       }).then(() => {
         console.log('remaining active tasks:', this.state.items);
