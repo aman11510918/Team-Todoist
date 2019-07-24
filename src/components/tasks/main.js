@@ -7,7 +7,8 @@ import { Popover, Modal, Button, Icon, Radio, Tooltip } from 'antd';
 const { confirm } = Modal;
 
 const Cookies = require('js-cookie');
-const token = Cookies.get('theToken');
+// const token = Cookies.get('theToken');
+const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 
 class Tasks extends Component {
 
@@ -198,7 +199,6 @@ class Tasks extends Component {
                   <div>
                     <Button type='link' style={{ color: '#333333' }} onClick={() => this.showDeleteConfirm(task)}><Icon type='delete' style={{ color: 'gray' }} />Delete Task</Button>
                     <br />
-                    {/* <Button type="link" style={{ color: '#333333' }}><Icon type='edit' style={{ color: 'gray' }} />Edit Task</Button> */}
                   </div>
                 }
               >

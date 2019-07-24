@@ -1,10 +1,9 @@
 import './App.css';
 import 'antd/dist/antd.css';
-
 import React, { Component } from 'react';
 import logo from './logo/Todolist-home.jpg';
 import RoutesFilter from './components/routes/routes';
-import { Collapse, Layout, Menu, Icon, Button } from 'antd';
+import { Collapse, Layout, Menu, Icon, Button, Popover } from 'antd';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import ProjectContent from './components/projects/projectContent';
 
@@ -15,12 +14,12 @@ const { Panel } = Collapse;
 
 export default class HomePage extends Component {
 
-  doLogout=(e)=>{
+  doLogout = (e) => {
     let token = Cookies.get('theToken');
     Cookies.remove('theToken');
-    console.log('Logged out(react)'); 
+    console.log('Logged out(react)');
     console.log('cookie is:', Cookies.get('theToken'));
-    window.location =`/auth/logout?access_token=${token}`;
+    window.location = `/auth/logout?access_token=${token}`;
   }
 
   genExtra = () => (
@@ -35,10 +34,23 @@ export default class HomePage extends Component {
     return (
       <Router>
         <div>
-          <Layout style={{ minHeight: 'min-content'}}>
-            <Header className="header" style={{ zIndex:'3', width: '100%', background: '#db4c3f', height: '44px', position: 'fixed' }}>
+          <Layout style={{ minHeight: 'min-content' }}>
+            <Header className="header" style={{ zIndex: '3', width: '100%', background: '#db4c3f', height: '44px', position: 'fixed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Link to="/"><img src={logo} alt="Todoist Logo" className="logo" /></Link>
-              <Button type="link" className="log-out-button" onClick={this.doLogout} >Log Out</Button>
+              <span style={{ clear: 'both', whiteSpace: 'wrap', margin: '8px 110px 0px 0px' }}>
+                <Popover
+                  width='120'
+                  placement="bottomRight"
+                  trigger="focus"
+                  content={
+                    <div>
+                      <Button type="link" style={{ color: 'black' }} className="log-out-button" onClick={this.doLogout}><Icon type="logout" style={{ color: 'red' }} />Log Out</Button>
+                    </div>
+                  }
+                >
+                  <Button type='link'><Icon type='setting' theme='filled' style={{ fontSize: '25px', color: 'white', marginBottom: '15px' }} /></Button>
+                </Popover>
+              </span>
             </Header>
             <Content style={{ padding: '0 0 0 15px', background: '#fafafa'}}>
               <div style={{ width: '299px', margin: '45px 0px 0px 0px', position: 'fixed'}}>
@@ -72,10 +84,8 @@ export default class HomePage extends Component {
                   <Collapse bordered={false} style={{ backgroundColor: '#fafafa' }}>
                     <Panel header="Projects" key="1" >
                       {
-                        
+
                         <ProjectContent />
-                       
-                        // <Button type='link' style={{color:'gray'}}><Icon type='plus' style={{color:'red'}}/>Add Project</Button>
                       }
                     </Panel>
                   </Collapse>
