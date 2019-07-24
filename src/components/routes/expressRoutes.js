@@ -8,7 +8,6 @@ var theCode = '';
 var theToken = '';
 const Cookies = require('js-cookie');
 
-require('dotenv').config();
 
 router.get('/todoist', (req, res) => {
     const csrfState = Math.random().toString(36).substring(7);

@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
 const expressRoute = require('./src/components/routes/expressRoutes');
+
 const port = process.env.PORT || 4000
+
+console.log(process.env.TEST, 'testing')
 
 app.use(express.json());
 
