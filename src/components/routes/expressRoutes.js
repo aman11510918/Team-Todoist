@@ -8,6 +8,7 @@ var theCode = '';
 var theToken = '';
 const Cookies = require('js-cookie');
 
+
 router.get('/todoist', (req, res) => {
     const csrfState = Math.random().toString(36).substring(7);
     res.cookie('csrfState', csrfState, { maxAge: 60000 });
@@ -57,7 +58,7 @@ router.get('/logout', (req, res) => {
         client_secret: process.env.CLIENT_SECRET,
         access_token: req.query.access_token
     };
-
+            
     console.log(query);
     let url = `https://api.todoist.com/sync/v8/access_tokens/revoke`;
 
