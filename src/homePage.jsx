@@ -86,8 +86,6 @@ export default class HomePage extends Component {
                       {
 
                         <ProjectContent />
-
-                        // <Button type='link' style={{color:'gray'}}><Icon type='plus' style={{color:'red'}}/>Add Project</Button>
                       }
                     </Panel>
                   </Collapse>
