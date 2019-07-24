@@ -3,7 +3,8 @@ import { Button } from 'antd';
 import 'antd/dist/antd.css';
 const Cookies = require('js-cookie')
 
-const token = Cookies.get('theToken')
+// const token = Cookies.get('theToken')
+const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 class EditOnClick extends Component {
 
   constructor(props) {

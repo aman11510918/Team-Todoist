@@ -7,7 +7,8 @@ import { Popover, Modal, Button, Icon, Radio, Tooltip } from 'antd';
 const { confirm } = Modal;
 
 const Cookies = require('js-cookie');
-const token = Cookies.get('theToken');
+// const token = Cookies.get('theToken');
+const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
 
 class Tasks extends Component {
 

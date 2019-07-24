@@ -2,6 +2,7 @@ import AddProject from './addProjects';
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import { Popover, Button, Icon, Modal } from 'antd';
+import EditOnDoubleClick from './editProjectName'
 
 const { confirm } = Modal;
 const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
@@ -10,7 +11,9 @@ class ProjectContent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			projects: []
+			projects: [],
+			isEditable: false,
+      		editableProjectID: '',
 		}
 	}
 	componentDidMount() {
@@ -86,11 +89,6 @@ class ProjectContent extends Component {
 		});
 	}
 
-	handleEditOnClick = (event) => {
-		console.log(event);
-
-		
-	}
 
 	render() {
 		const result = this.state.projects.filter(project => project.name !== "Inbox")
@@ -102,6 +100,7 @@ class ProjectContent extends Component {
 					<li key={value.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 						<Link to={ { pathname: `/project/${value.id}`, state: { projectName: value.name } } }>
 							<div key={value.id}>
+							<EditOnDoubleClick customKey={value.id} value={value.content} onEditClick={this.handleEditToggle}/>
 							{value.name}
 						</div></Link>
 						<div style={{ clear: 'both', whiteSpace: 'wrap' }}>
@@ -111,7 +110,7 @@ class ProjectContent extends Component {
 								trigger="focus"
 								content={
 									<div>
-										<Button type="link" style={{ color: '#333333' }} onClick={() => {this.handleEditOnClick}}><Icon type='edit' style={{ color: 'gray' }} />Edit Task</Button>
+										{/* <Button type="link" style={{ color: '#333333' }} onClick={this.handleEditOnClick}><Icon type='edit' style={{ color: 'gray' }} />Edit Task</Button> */}
 										<br />
 										<Button type='link' style={{ color: '#333333' }} onClick={() => this.showDeleteConfirm(value)}><Icon type='delete' style={{ color: 'red' }} />Delete Task</Button>
 									</div>

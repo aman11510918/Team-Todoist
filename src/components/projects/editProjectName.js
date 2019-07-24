@@ -1,36 +1,37 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 const Cookies = require('js-cookie')
 
-const token = Cookies.get('theToken')
-class EditOnClick extends Component {
+// const token = Cookies.get('theToken')
+const token = "78fcfd26adb47157e35612abb3649bdf71cc1400";
+class EditOnDoubleClick extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       value: props.value,
       isEditable: false,
-      editableTaskID: props.customKey
+      editableProjectID: props.customKey
     }
   }
 
   handleEditSave = () => {
     this.setState({
       isEditable: false,
-      value: this.refs.newEditedTask.value
+      value: this.refs.newEditedProject.value
     }, () => {
-      const newTaskContent = { content: this.state.value };
-      fetch(`https://api.todoist.com/rest/v1/tasks/${this.props.customKey}`, {
-        method: "POST",
-        body: JSON.stringify(newTaskContent),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .then((request) => {
-        })
+      const newProjectContent = { content: this.state.value };
+      fetch(`https://api.todoist.com/rest/v1/projects/${this.state.customKey}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(() => {
+      console.log('successfully deleted project with id:', this.state.customKey)
+    })
     });
   }
 
@@ -41,7 +42,7 @@ class EditOnClick extends Component {
   editViewUI = () => {
     return (
       <div style={{ minHeight: '100px', display: 'flex', alignItems: 'center' }}>
-        <input className='' type="text" style={{ width: '350px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }} defaultValue={this.state.value} ref='newEditedTask' />
+        <input className='' type="text" style={{ width: '350px', height: '32px', borderRadius: '5px', border: '2px solid #ccc', padding: '4px 11px', margin: '7px' }} defaultValue={this.state.value} ref='newEditedProject' />
         <></>
         <Button type='danger' style={{ backgroundColor: '#c53727', color: 'white', borderRadius: '5px', marginLeft: '7px' }} className='' onClick={() => { this.handleEditSave(); this.toggleUI(); this.props.onEditClick({ isEditable: !this.state.isEditable }) }}>Save</Button>
         <Button type="link" className='' style={{ color: '#555555', textDecoration: 'none' }} onClick={() => { this.toggleUI(); this.props.onEditClick({ isEditable: !this.state.isEditable }) }}>Cancel</Button>
@@ -51,9 +52,9 @@ class EditOnClick extends Component {
 
   originalViewUI = () => {
     return (
-      <span onClick={() => { this.toggleUI(); this.props.onEditClick({ isEditable: !this.state.isEditable, editableTaskID: this.state.editableTaskID }) }}>
+      <Link onDoubleClick={() => { this.toggleUI(); this.props.onEditClick({ isEditable: !this.state.isEditable, editableProjectID: this.state.editableProjectID }) }}>
         {this.state.value}
-      </span>
+      </Link>
     );
   }
 
@@ -64,4 +65,4 @@ class EditOnClick extends Component {
   }
 }
 
-export default EditOnClick;
+export default EditOnDoubleClick;
