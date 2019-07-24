@@ -60,3 +60,119 @@
 .due {
   float: right;
 }
+
+/*---------------FIRST PAGE (Signin/Signup)---------------*/
+
+.Top-Bar {
+  display: flex;
+  height: 65px;
+  text-align: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.Todoist-Logo {
+  width: 45%;
+  height: 100%;
+  background-image: url('../src/components/img/logo.png');
+  background-position-x: 9%;
+  background-position-y: 55%;
+  background-size: 210px;
+  background-repeat: no-repeat;
+}
+
+.Login-Buttons {
+  width: 55%;
+  height: 100%;
+}
+
+.First-Section {
+  margin-top: 75px;
+  display: flex;
+  height: 35em;
+}
+
+.First-Section-1 {
+  padding-left: 6%;
+  width: 50%;
+}
+
+.First-Section-1-Heading {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 3.2rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.First-Section-1-Heading-1 {
+  color: #474747;
+}
+
+#First-Section-1-Heading-2 {
+  color: red;
+}
+
+.First-Section-1-Text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-right: 13%;
+  line-height: 1.5;
+  color: #6f6f6f;
+  font-size: 1.125rem;
+  text-align: justify;
+}
+
+.First-Section-2 {
+  width: 50%;
+  background-image: url('../src/components/img/girl.png');
+  background-position-x: 0%;
+  background-position-y: 9%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+
+#Login-Menu {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2%;
+  margin-right: 40px;
+
+}
+
+#Login-Menu li a {
+  font-size: 1rem;
+  text-decoration: none;
+  color: #5f5f5f;
+}
+
+.sample-class {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  font-size: 1.2rem;
+}
+
+#get-started {
+  height: 65px;
+  width: 300px;
+  background-color: red;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+#wondering {
+  color: #474747;
+}
+
+#watch-video {
+  color: red;
+}
+
+.log-out-button{
+  height:30px;
+  margin-left:80%;
+  margin-top: -30% auto;
+}

@@ -6,17 +6,15 @@ import { Popover, Modal, Button, Icon, Radio, Tooltip } from 'antd';
 
 const { confirm } = Modal;
 
-// const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
-// const token = "93b6caac34a82a2e2d8f1d57d9f5143516e2721c";
-// const token = '6353a697208d207658daa816471b1da86cbc2c96';
-const token = '1af2e951c667fdb4790f2a868eb63644ab95421c';
+const Cookies = require('js-cookie');
+const token = Cookies.get('theToken');
 
 class Tasks extends Component {
 
   constructor() {
     super();
     this.state = {
-      isLoaded:'false',
+      isLoaded: 'false',
       items: [],
       key: '',
       isEditable: false,
@@ -143,56 +141,53 @@ class Tasks extends Component {
   }
 
   handleEditToggle = (props) => {
-    this.setState({isEditable: props.isEditable, editableTaskID: props.editableTaskID})
+    this.setState({ isEditable: props.isEditable, editableTaskID: props.editableTaskID })
   }
 
   handleCompleteTask = () => {
-   
-    this.setState({showCompleted: !this.state.showCompleted});
+
+    this.setState({ showCompleted: !this.state.showCompleted });
   }
-  
+
   showCompletedTasks = () => {
     return (
       this.state.completedTasks.map(completedTask => {
-          return <div style={{marginRight:'50px'}}>
-              <li style={{listStyle: 'none', display: 'flex', alignItems: 'center', borderBottom: '1px solid #e8e8e8', paddingTop: '10px', paddingBottom: '10px'}}>
-             <Icon type="check-circle" theme="filled" style={{color:'green'}}/>
-                  <span style={{marginLeft: '10px'}}>{completedTask.content}</span>
-              </li>
-
-
-
-          </div>
-        })
+        return <div style={{ marginRight: '50px' }}>
+          <li style={{ listStyle: 'none', display: 'flex', alignItems: 'center', borderBottom: '1px solid #e8e8e8', paddingTop: '10px', paddingBottom: '10px' }}>
+            <Icon type="check-circle" theme="filled" style={{ color: 'green' }} />
+            <span style={{ marginLeft: '10px' }}>{completedTask.content}</span>
+          </li>
+        </div>
+      })
     )
   }
 
   render() {
     return (
       <>
-      
-      <h1>
-        Inbox
+
+        <h1>
+          Inbox
         <Button type="link" onClick={() => this.handleCompleteTask()}><Icon type="check-circle" />Show Completed Task</Button>
-      </h1>
+        </h1>
 
         {this.state.items.map(task =>
-        <div className = 'displayList' key={task.id}>
-          <li className="listOfTask" key={task.id}
-            style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
-            <div>
-              { !(task.id === this.state.editableTaskID) && <Radio size='large'
-                onChange={() => this.handleCheckboxChange(task)}
-                defaultChecked={task.completed}
-                style={{marginRight: '10px'}}
-              />}
-              <EditOnClick customKey={task.id} value={task.content} onEditClick={this.handleEditToggle}/>
-            </div>
-            <Tooltip placement='bottom' title={'Date'}>
-            <div className='due' style={{fontSize: '10px'}} >
-              {!(task.id === this.state.editableTaskID) && Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
-            </div>
-            </Tooltip>
+          <div className='displayList' key={task.id}>
+            <li className="listOfTask" key={task.id}
+              style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
+              <div>
+                {!(task.id === this.state.editableTaskID) && <Radio size='large'
+                  onChange={() => this.handleCheckboxChange(task)}
+                  defaultChecked={task.completed}
+                  style={{ marginRight: '10px' }}
+                />}
+                <EditOnClick customKey={task.id} value={task.content} onEditClick={this.handleEditToggle} />
+              </div>
+              <Tooltip placement='bottom' title={'Date'}>
+                <div className='due' style={{ fontSize: '10px' }} >
+                  {!(task.id === this.state.editableTaskID) && Object.prototype.hasOwnProperty.call(task, 'due') ? this.handleDates(task.due.date) : ''}
+                </div>
+              </Tooltip>
             </li>
             <div style={{ clear: 'both', whiteSpace: 'wrap' }}>
               <Popover
@@ -213,8 +208,8 @@ class Tasks extends Component {
           </div>
         )}
         <AddTask onAddSubmit={this.handleAddTask} />
-        {this.state.showCompleted ? this.showCompletedTasks() : null }
-                
+        {this.state.showCompleted ? this.showCompletedTasks() : null}
+
       </>
     );
   }
